@@ -1,0 +1,21 @@
+@use "sass:color";
+$color_p: 266;
+$color_p-2: 307;
+$bck-color-primary: hsl($color_p, 100%, 66%);
+
+$breakpoints: (
+    pt-mobil-max: 399px,
+    mobil-max: 499px,
+    tablet-min: 500px,
+    tablet-max: 599px,
+    gd-tablet-min: 600px,
+    gd-tablet-max: 767px,
+    pt-screen-min: 768px,
+    pt-screen-max: 1049px,
+    gd-screen-min: 1050px,
+    very-gd-screen-min: 1205px
+);
+$orientation: (
+    paysage: landscape,
+    portrait: portrait
+);
