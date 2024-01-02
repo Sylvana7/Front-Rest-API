@@ -1,0 +1,70 @@
+@mixin pt-mobil-max {
+    @media screen and (max-width: map-get($breakpoints, pt-mobil)) {
+        @content;
+    }
+}
+
+@mixin mobil-max {
+    @media screen and (max-width: map-get($breakpoints, mobil-max)) {
+        @content;
+    }
+}
+
+@mixin tablet-min {
+    @media screen and (max-width: map-get($breakpoints, tablet-min)) {
+        @content;
+    }
+}
+
+@mixin tablet-max {
+    @media screen and (max-width: map-get($breakpoints, tablet-max)) {
+        @content;
+    }
+}
+
+@mixin gd-tablet-min {
+    @media screen and (min-width: map-get($breakpoints, gd-tablet-min)) {
+        @content;
+    }
+}
+
+@mixin gd-tablet-max {
+    @media screen and (max-width: map-get($breakpoints, gd-tablet-max)) {
+        @content;
+    }
+}
+
+@mixin pt-screen-min {
+    @media screen and (min-width: map-get($breakpoints, pt-screen-min)) {
+        @content;
+    }
+}
+
+@mixin pt-screen-max {
+    @media screen and (max-width: map-get($breakpoints, pt-screen-max)) {
+        @content;
+    }
+}
+
+@mixin gd-screen-min {
+    @media screen and (min-width: map-get($breakpoints, gd-screen-min)) {
+        @content;
+    }
+}
+
+@mixin very-gd-screen-min {
+    @media screen and (min-width: map-get($breakpoints, very-gd-screen-min)) {
+        @content;
+    }
+}
+
+@mixin paysage {
+    @media (orientation: landscape) {
+        @content;
+    }
+}
+@mixin portrait {
+    @media (orientation: portrait) {
+        @content;
+    }
+}

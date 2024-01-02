@@ -22,4 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-Front-Rest-API
+
+
+# CSS
+*.css
