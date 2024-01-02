@@ -8,3 +8,9 @@ Suivre les instructions :
 - Mettre nom et nom de package
 - choisir vanilla
 - choisir TypeScript
+
+Node.js :
+```nginx
+npm install
+```
+npm run dev
