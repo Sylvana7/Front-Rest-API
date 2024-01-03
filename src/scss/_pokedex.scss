@@ -1,0 +1,201 @@
+@font-face {
+    font-family: "icons";
+    src: url("../fonts/icons.eot?456e640c93ca1d54e86948898799edfa");
+    src:
+        url("../fonts/icons.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/icons.woff?456e640c93ca1d54e86948898799edfa") format("woff"),
+        url("../fonts/icons.ttf?456e640c93ca1d54e86948898799edfa") format("truetype"),
+        url("../fonts/icons.svg?456e640c93ca1d54e86948898799edfa#icons") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+.icon {
+    font-family: "icons";
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    font-weight: normal;
+    font-style: normal;
+    speak: none;
+    text-decoration: inherit;
+    text-transform: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &_add:before {
+        content: "\f101";
+    }
+    &_alert:before {
+        content: "\f102";
+    }
+    &_arrow_sm_down:before {
+        content: "\f103";
+    }
+    &_arrow_sm_left:before {
+        content: "\f104";
+    }
+    &_arrow_sm_right:before {
+        content: "\f105";
+    }
+    &_arrow_sm_up:before {
+        content: "\f106";
+    }
+    &_badges:before {
+        content: "\f107";
+    }
+    &_body:before {
+        content: "\f108";
+    }
+    &_cards:before {
+        content: "\f109";
+    }
+    &_cautionsymbol:before {
+        content: "\f10a";
+    }
+    &_check:before {
+        content: "\f10b";
+    }
+    &_checkmark:before {
+        content: "\f10c";
+    }
+    &_clothing:before {
+        content: "\f10d";
+    }
+    &_collection:before {
+        content: "\f10e";
+    }
+    &_create_avatar:before {
+        content: "\f10f";
+    }
+    &_double:before {
+        content: "\f110";
+    }
+    &_download:before {
+        content: "\f111";
+    }
+    &_event:before {
+        content: "\f112";
+    }
+    &_eye_closed:before {
+        content: "\f113";
+    }
+    &_eye_open:before {
+        content: "\f114";
+    }
+    &_female_symbol:before {
+        content: "\f115";
+    }
+    &_filter_height_large:before {
+        content: "\f116";
+    }
+    &_filter_height_medium:before {
+        content: "\f117";
+    }
+    &_filter_height_small:before {
+        content: "\f118";
+    }
+    &_filter_weight_large:before {
+        content: "\f119";
+    }
+    &_filter_weight_medium:before {
+        content: "\f11a";
+    }
+    &_filter_weight_small:before {
+        content: "\f11b";
+    }
+    &_friends:before {
+        content: "\f11c";
+    }
+    &_gender:before {
+        content: "\f11d";
+    }
+    &_hamburger:before {
+        content: "\f11e";
+    }
+    &_home:before {
+        content: "\f11f";
+    }
+    &_journal:before {
+        content: "\f120";
+    }
+    &_joystick:before {
+        content: "\f121";
+    }
+    &_male_symbol:before {
+        content: "\f122";
+    }
+    &_messages:before {
+        content: "\f123";
+    }
+    &_minus:before {
+        content: "\f124";
+    }
+    &_multiply:before {
+        content: "\f125";
+    }
+    &_notepage:before {
+        content: "\f126";
+    }
+    &_plus:before {
+        content: "\f127";
+    }
+    &_points_champ:before {
+        content: "\f128";
+    }
+    &_points_game:before {
+        content: "\f129";
+    }
+    &_pokeball:before {
+        content: "\f12a";
+    }
+    &_pokedex_added:before {
+        content: "\f12b";
+    }
+    &_pokemontv:before {
+        content: "\f12c";
+    }
+    &_prize_bronze:before {
+        content: "\f12d";
+    }
+    &_prize_gold:before {
+        content: "\f12e";
+    }
+    &_prize_silver:before {
+        content: "\f12f";
+    }
+    &_refresh:before {
+        content: "\f130";
+    }
+    &_remove:before {
+        content: "\f131";
+    }
+    &_search:before {
+        content: "\f132";
+    }
+    &_settings:before {
+        content: "\f133";
+    }
+    &_trade:before {
+        content: "\f134";
+    }
+    &_videogame:before {
+        content: "\f135";
+    }
+    &_wishlist:before {
+        content: "\f136";
+    }
+    &_wrench:before {
+        content: "\f137";
+    }
+    &_news:before {
+        content: "\f138";
+    }
+    &_mobile:before {
+        content: "\f139";
+    }
+    &_go:before {
+        content: "\f13a";
+        margin-right: 30px;
+    }
+}
