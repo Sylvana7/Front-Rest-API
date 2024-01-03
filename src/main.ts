@@ -1,17 +1,10 @@
-
-import { setupCounter } from './counter.ts'
-import { getPokemon } from "./pokemon_list.ts"
+import { getPokemonJson, getPokemon } from "./pokemon_list.ts";
 import "./scss/style.scss";
-import { htmlVite } from "./html/vite";
+import { htmlHome } from "./html/pokemonList.ts";
 
+const params: string[] = window.location.pathname.split("/");
+console.log(params);
 
-// console.log(fileContent);
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = htmlVite;
-
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
-
-console.log("container");
-getPokemon("https://pokeapi.co/api/v2/pokemon");
-
-setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
-
+document.querySelector<HTMLDivElement>("#app")!.innerHTML = htmlHome(
+  getPokemon(getPokemonJson("https://pokeapi.co/api/v2/pokemon"))
+);
