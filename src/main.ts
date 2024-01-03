@@ -9,6 +9,7 @@ const pokemonJson: any = await getPokemonJson(
   "https://pokeapi.co/api/v2/pokemon"
 );
 
+const htmlPokemon: any = await getPokemon(pokemonJson);
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = htmlHome(
-  getPokemon(pokemonJson)
+    htmlPokemon
 );
