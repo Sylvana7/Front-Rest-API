@@ -1,23 +1,24 @@
-export const getPokemon = async (url: string): Promise<string> => {
+export const getPokemonJson = async (url: string): Promise<any> => {
   const container: Response = await fetch(url);
-  const pokemon: any = await container.json();
-  console.log("pokemon");
-  console.log(pokemon.results);
+  return await container.json();
+};
 
+export function getPokemon(list: any): string {
+  const pokemon: any = list.results;
   const hostname: string = window.location.hostname;
   let html: string = "";
 
-  for (let array of pokemon.results) {
+  for (let array of pokemon) {
     const name = array.name;
-    console.log(name);
-
     const url = array.url;
-    console.log(url);
-    html += `<div>
-        <a href=${hostname} + "/pokemon/1">
-        <h3>${name}</h3>
-        </a>
-        </div>`;
+
+    html += `
+    <a href=${hostname} + "/pokemon/1">
+      <div>
+          <h3>${name}</h3>
+      </div>
+    </a>
+        `;
   }
   return html;
-};
+}
