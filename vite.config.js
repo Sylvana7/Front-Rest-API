@@ -6,8 +6,7 @@ module.exports = defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
-        about: resolve(__dirname, "/pages/about/index.html"),
-        pokemon: resolve(__dirname, "/pages/pokemon/index.html"),
+        // about: resolve(__dirname, "/pages/about/index.html"),
       },
     },
   },
