@@ -1,5 +1,6 @@
-export function displayIcon(): string {
-  return `
+export class DisplayIcon {
+  public displayIcon(): string {
+    return `
     <div class='icons'>
         <div><span class='icon icon_add'></span>icon_add</div>
         <div><span class='icon icon_alert'></span>icon_alert</div>
@@ -60,4 +61,5 @@ export function displayIcon(): string {
         <div><span class='icon icon_go'></span>icon_go</div>
     </div>
     `;
+  }
 }
