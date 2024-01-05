@@ -4,6 +4,7 @@ import { ListPokemon } from "./ts/routes/pokemonList";
 import { htmlHome } from "./html/pokemonList";
 import { DisplayIcon } from "./icon";
 import "./scss/style.scss";
+import { FilterPokemon } from "./ts/services/filter";
 
 export const hostname: string = "http://" + window.location.hostname + ":5173";
 const app = document.querySelector<HTMLDivElement>("#app");
@@ -27,6 +28,11 @@ switch (true) {
   case App.get("page"): {
     const pagin = new ListPokemon();
     result = await pagin.getListPokemon();
+    break;
+  }
+  case App.get("filter"): {
+    const pagin = new FilterPokemon();
+    result = pagin.test();
     break;
   }
   default: {
