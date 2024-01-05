@@ -1,25 +1,25 @@
-$font-stack: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-$primary-color: hsla(0, 0%, 100%, 0.87);
-$primary-background-color: hsl(111, 100%, 30%);
-
 body {
   font-family: $font-stack;
   color: $primary-color;
-  background-color: $primary-background-color;
+  background-color: $color_body;
 }
 section {
   background-image: url("../img/landscape.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  margin-top: 10px;
 }
 
 header {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  justify-content: space-between;
+  background-color: $primary-background-color;
+
   img {
-    width: 48vw;
+    width: 20vw;
     padding: 5px;
   }
   nav {
