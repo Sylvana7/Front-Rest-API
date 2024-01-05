@@ -2,6 +2,10 @@
 $color_p: 266;
 $color_p-2: 307;
 $bck-color-primary: hsl($color_p, 100%, 66%);
+$primary-color: hsla(0, 0%, 100%, 0.87);
+$primary-background-color: hsl(111, 100%, 30%);
+$color_body: hsl(120, 24%, 15%);
+$font-stack: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
 $breakpoints: (
     pt-mobil-max: 399px,
