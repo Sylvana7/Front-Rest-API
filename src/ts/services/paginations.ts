@@ -43,6 +43,8 @@ export class Pagination {
 
     navigationHtml += "<div class='pokemon__pagination'>";
 
+    classNav = this.currentPage <= 1 ? "disabled" : "";
+
     navigationHtml += firstPage.replace("$classNav", classNav);
 
     navigationHtml += previousPage
@@ -50,6 +52,8 @@ export class Pagination {
       .replace("$classNav", classNav);
 
     navigationHtml += this.nav(numPage);
+
+    classNav = this.currentPage >= this.pageMax ? "disabled" : "";
 
     navigationHtml += nextPage
       .replace("$num", this.nextPage().toString())

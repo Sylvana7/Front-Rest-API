@@ -10,6 +10,8 @@
       font-size: 14px;
       background-color: #d1d1d1;
       box-shadow: 1px 1px 3px #717171;
+      color: hsl(0deg 0% 14%);
+      font-weight: bold;
       padding: 2px;
       height: 20px;
       text-align: center;
@@ -107,6 +109,15 @@
           background-color: hsl(205, 59%, 89%);
         }
       }
+    }
+  }
+  &__search {
+    text-align: right;
+    background-color: #003507;
+    padding: 6px;
+    input,
+    button {
+      font-size: 18px;
     }
   }
 }
