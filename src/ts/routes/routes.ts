@@ -14,4 +14,7 @@ export class Routes {
   public static getNumPage(): number {
     return Number(Routes.route[2]) > 0 ? Number(Routes.route[2]) : 1;
   }
+  public static getSearch(): string {
+    return Routes.route[2];
+  }
 }
