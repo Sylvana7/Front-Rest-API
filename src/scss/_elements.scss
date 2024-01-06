@@ -1,3 +1,103 @@
+.app {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: $font-poke-solid;
+    margin: 0px auto;
+    padding: 10px;
+    text-align: center;
+  }
+  .title {
+    font-size: 24px;
+    div {
+      width: 100%;
+      &:first-child {
+        position: absolute;
+        margin: 0 auto;
+        text-shadow: $text-shadow-values;
+      }
+      &:last-child {
+        position: relative;
+        background: linear-gradient(hsl($color_p, 74%, 70%) 20%, hsl(0, 77%, 45%) 90%);
+        background-clip: text;
+        color: transparent;
+      }
+    }
+  }
+  &__loading {
+    & > div:last-child {
+      margin: 0 auto;
+      width: max-content;
+    }
+    .title {
+      margin-bottom: 20px;
+      h1 {
+        font-size: 22px;
+        &:first-child {
+          // font-family: $font-poke-solid;
+        }
+      }
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+      border: 3px solid;
+      border-color: #fff #fff transparent transparent;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+
+      &::after,
+      &::before {
+        content: "";
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        border: 3px solid;
+        border-color: transparent transparent hsl(111, 100%, 50%) hsl(111, 100%, 50%);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        animation: rotationBack 0.5s linear infinite;
+        transform-origin: center center;
+      }
+      &::before {
+        width: 32px;
+        height: 32px;
+        border-color: #fff #fff transparent transparent;
+        animation: rotation 1.5s linear infinite;
+      }
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes rotationBack {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(-360deg);
+        }
+      }
+    }
+  }
+}
 .pokemon {
   &__pagination {
     display: flex;
@@ -7,39 +107,20 @@
     a {
       border: 2px solid hsl(0deg 99.76% 24.91%);
       border-radius: 5px;
-      font-size: 14px;
-      background-color: #d1d1d1;
-      box-shadow: 1px 1px 3px #717171;
+      font-size: 0.7em;
+      background-color: hsl(0, 0%, 82%);
+      box-shadow: 1px 1px 3px hsl(0, 0%, 44%);
       color: hsl(0deg 0% 14%);
       font-weight: bold;
       padding: 2px;
       height: 20px;
       text-align: center;
       display: inline-block;
-      &.disabled,
-      &.activate {
-        cursor: default;
-        pointer-events: none;
-        color: grey;
-        background-color: #717171;
-      }
-      &.activate {
-        background-color: aquamarine;
-      }
-      span {
-        &.icon {
-          // margin: 0 5px;
-          &.double {
-            margin-right: -3px;
-          }
-          &:before {
-            width: 10px;
-            display: block;
-          }
-        }
-      }
+      width: 20px;
+      font-family: $font-poke-solid;
+      line-height: 23px;
       &:hover {
-        background-color: hsl(202, 22%, 93%);
+        background-color: hsl($color_bk, 22%, 93%);
       }
       &:nth-child(2),
       &:nth-last-child(3) {
@@ -50,6 +131,29 @@
       }
       @include gd-screen-min {
         width: 20px;
+      }
+      &.disabled,
+      &.activate {
+        cursor: default;
+        pointer-events: none;
+        color: hsl(0, 0%, 50%);
+        background-color: hsl(0, 0%, 44%);
+      }
+      &.activate {
+        background-color: #7fffd4;
+      }
+      span {
+        &.icon {
+          // margin: 0 5px;
+          font-weight: bold;
+          &.double {
+            margin-right: -3px;
+          }
+          &:before {
+            width: 10px;
+            display: block;
+          }
+        }
       }
     }
 
@@ -74,59 +178,76 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    h3 {
+    margin: 5px;
+    h1,
+    h2,
+    h3,
+    h4 {
+      padding: 10px 0 5px 0;
       text-align: center;
     }
     a {
       color: hsl(0, 0%, 14%);
-      height: 230px;
-      display: flex;
+      display: block;
+      position: relative;
+      margin: 3px;
+
       div {
-        display: flex;
-        flex-direction: column;
-        border: 2px solid hsl(0, 97%, 23%);
-        width: 260px;
-        margin: 5px 9px;
-        border-radius: 20px;
-        box-shadow:
-          2px 2px 4px hsl(60, 11%, 38%),
-          inset 2px 2px 4px hsl(0, 0%, 30%);
-        background-color: hsl(205, 13%, 81%);
-        position: relative;
-        img {
-          width: 170px;
-          margin: 0 auto;
-          height: 145px;
-        }
-        span {
-          position: absolute;
-          text-align: right;
-          margin-right: 10px;
-          bottom: 0px;
-          right: 0px;
-        }
-        &:hover {
-          background-color: hsl(205, 59%, 89%);
+        &:first-child {
+          position: relative;
+          border: 2px solid hsl(0, 97%, 23%);
+          border-radius: 20px;
+          box-shadow:
+            2px 2px 4px hsl(60, 11%, 38%),
+            inset 2px 2px 4px hsl(0, 0%, 30%);
+          background-color: hsl($color_bk, 13%, 81%);
+          width: 157px;
+          height: 147px;
+          h3 {
+            font-size: 18px;
+            padding-top: 10px;
+            text-shadow: 0px 0px 3px hsl(0, 0%, 100%);
+            color: hsl($color_p, 91%, 9%);
+            background-color: hsl($color_p, 31%, 64%);
+            border-radius: 20px 20px 0 0;
+            margin: 2px 0 0 3px;
+          }
+          div {
+            position: relative;
+            width: 100%;
+            height: calc(100% - 55px);
+            margin: 5px auto;
+
+            img {
+              max-width: 100%;
+              max-height: 100%;
+              display: block;
+              margin: auto;
+            }
+          }
+          span {
+            position: absolute;
+            display: block;
+            right: 13px;
+            font-size: 0.85em;
+            bottom: -2px;
+            font-family: $font-poke-solid;
+            font-weight: 100;
+          }
+          &:hover {
+            background-color: hsl($color_bk, 59%, 89%);
+          }
         }
       }
     }
   }
   &__search {
     text-align: right;
-    background-color: #003507;
+    background-color: hsl($color_p, 100%, 10%);
     padding: 6px;
     input,
     button {
       font-size: 18px;
     }
-  }
-}
-#app {
-  h2 {
-    display: block;
-    margin: 0px auto;
-    padding: 20px;
-    text-align: center;
-    font-size: 50px;
   }
 }

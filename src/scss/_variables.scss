@@ -1,11 +1,13 @@
 @use "sass:color";
-$color_p: 266;
-$color_p-2: 307;
+$color_p: 111;
+$color_bk: 205;
 $bck-color-primary: hsl($color_p, 100%, 66%);
 $primary-color: hsla(0, 0%, 100%, 0.87);
 $primary-background-color: hsl(111, 100%, 30%);
 $color_body: hsl(120, 24%, 15%);
 $font-stack: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+$font-poke-solid: "Pokemon-Solid", Avenir, Helvetica, Arial, sans-serif;
+$font-poke-hollow: "Pokemon-Hollow", Avenir, Helvetica, Arial, sans-serif;
 
 $breakpoints: (
     pt-mobil-max: 399px,
@@ -23,3 +25,29 @@ $orientation: (
     paysage: landscape,
     portrait: portrait
 );
+
+$text-shadow-values: ();
+/* contour */
+
+@for $i from 1 through 2 {
+    $text-shadow-values: append($text-shadow-values, 0 0 4px hsl(0, 100%, 18%), comma);
+}
+/* relief */
+@for $i from 1 through 7 {
+    $lightnessNum: 73 - ($i * 2);
+    $text-shadow-values: append(
+        $text-shadow-values,
+        #{$i * 0.5}px #{($i + 2) * 1}px 0 hsl($color_p, 26%, $lightnessNum),
+        comma
+    );
+}
+
+/* ombre */
+@for $i from 1 through 4 {
+    $alphaNum: 0.5 - ($i * 0.1);
+    $text-shadow-values: append(
+        $text-shadow-values,
+        8px #{7 + ($i * 5)}px #{5 + ($i * 5)}px hsla(0, 0%, 0%, $alphaNum),
+        comma
+    );
+}

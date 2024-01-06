@@ -1,4 +1,5 @@
 import { hostname } from "../../main";
+import { strUcFirst } from "./functions";
 
 export function displayPokemon(
   infoPokemon: string,
@@ -10,8 +11,8 @@ export function displayPokemon(
   display.innerHTML = `
           <a href='${hostname}/pokemon/${infoPokemon}'>
             <div>
-                <h3>${name}</h3>
-                <img src=${urlImg}>
+                <h3>${strUcFirst(name)}</h3>
+                <div><img src=${urlImg}></div>
                 <span>${idPokemon}</span>
             </div>
           </a>

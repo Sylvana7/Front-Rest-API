@@ -1,6 +1,8 @@
+@import "normalize/normalize";
+@include normalize();
 @import "variables";
 @import "mixins";
 @import "root";
-@import "bases_vanilla_ts";
+@import "bases";
 @import "pokedex";
 @import "elements";
