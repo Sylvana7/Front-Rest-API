@@ -21,10 +21,34 @@
         </nav>
       </div>
     </header>
-
-    <section>
-      <div id="app"></div>
-    </section>
+    <div class="form">
+      <form
+        class="pokemon__search"
+        method="GET"
+        action="http://localhost:5173/get/"
+        class="form__search"
+      >
+        <input
+          type="text"
+          placeholder="Search..."
+          name="form__search--pokemon"
+          id="form__search--pokemon"
+          required=""
+        />
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+    <main>
+      <div id="app" class="app">
+        <div class="app__loading">
+          <div class="title">
+            <div><h1>loading in progress</h1></div>
+            <div><h1>loading in progress</h1></div>
+          </div>
+          <div><span class="loader"></span></div>
+        </div>
+      </div>
+    </main>
 
     <footer>
       <p>&copy;copyright</p>
