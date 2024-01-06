@@ -105,6 +105,9 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
+    &:last-child {
+      margin-bottom: 10px;
+    }
     a {
       border: 2px solid hsl(0deg 99.76% 24.91%);
       border-radius: 5px;
