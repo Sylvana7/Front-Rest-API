@@ -37,7 +37,7 @@ $text-shadow-values: ();
     $lightnessNum: 73 - ($i * 2);
     $text-shadow-values: append(
         $text-shadow-values,
-        #{$i * 0.5}px #{($i + 2) * 1}px 0 hsl($color_p, 26%, $lightnessNum),
+        #{$i * 0.5}px #{($i + 2) * 1}px 0 hsl($color_p, 26%, $lightnessNum * 1%),
         comma
     );
 }

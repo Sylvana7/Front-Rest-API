@@ -6,8 +6,8 @@ export function displayPokemon(
   name: string,
   urlImg: string,
   idPokemon: string
-): InnerHTML {
-  const display: InnerHTML = document.createElement("div");
+): HTMLDivElement {
+  const display: HTMLDivElement = document.createElement("div");
   display.innerHTML = `
           <a href='${hostname}/pokemon/${infoPokemon}'>
             <div>
