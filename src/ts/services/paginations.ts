@@ -80,9 +80,11 @@ export class Pagination {
       this.pageCount(),
     ];
     const displayNumberPage: number = numPage[arrayElem.indexOf(elem)];
-    const j: number = elem === ("previous" || "next") ? 1 : 2;
-    let double: string = elem === ("previous" || "next") ? "" : "double ";
-    const sens: string = elem === ("previous" || "first") ? "left" : "right";
+    const j: number = elem === "previous" || elem === "next" ? 1 : 2;
+    let double: string =
+      elem === "previous" || elem === "next" ? "" : "double ";
+    const sens: string =
+      elem === "previous" || elem === "first" ? "left" : "right";
 
     const anchor: HTMLAnchorElement = new DocumentCreate({
       className: this.classNav,
