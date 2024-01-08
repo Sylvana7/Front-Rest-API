@@ -3,24 +3,21 @@ import { Routes } from "../routes/routes";
 import { getCookie } from "typescript-cookie";
 import { hostname } from "../../main";
 import { PaginationPokemon } from "./pokemonPagination";
-import { Form } from "../services/form";
+// import { Form } from "../services/form";
 import { displayPokemon } from "../services/pokemonsDisplay";
+import { DocumentCreate } from "../services/createElements";
 
 export class ListPokemon {
   private fetchPokemon: JSONObject = { count: 0, results: [] };
   private currentPage: number;
-  private navigation: string;
+  // private navigation: HTMLDivElement;
 
   constructor() {
     this.currentPage = Routes.getNumPage();
-    this.navigation = "";
+    // this.navigation = ";
   }
 
   public async getListPokemon(): Promise<InnerHTML> {
-    return await this.init();
-  }
-
-  private async init(): Promise<InnerHTML> {
     const limit: number = Number(getCookie("limit"));
     const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
     const offset = paginPage * limit;
@@ -31,21 +28,30 @@ export class ListPokemon {
 
     const pagination = new PaginationPokemon(this.fetchPokemon.count);
     const pokemon: any = this.fetchPokemon.results;
-    this.navigation = await pagination.getPaginationPokemon();
-    const htmlDisplay: HTMLDivElement = document.createElement("div");
-    htmlDisplay.appendChild(
-      new Form("GET").getSearch(
-        "text",
-        "Search...",
-        "pokemon",
-        "<i class='fa fa-search'></i>"
-      )
-    );
 
-    htmlDisplay.innerHTML += `<div class='title'><h2>Pokemon list</h2></div>`;
-    htmlDisplay.innerHTML += this.navigation;
-    const listDisplay = document.createElement(`div`);
-    listDisplay.classList.add("pokemon__list");
+    // Create Pagination for Pokemon List
+    const navigation: HTMLDivElement = await pagination.getPaginationPokemon();
+
+    const htmlDisplay: HTMLDivElement = new DocumentCreate().div();
+
+    // Create Title
+    const titleDisplay: HTMLDivElement = new DocumentCreate({
+      className: "title",
+    }).div();
+
+    for (let i = 0; i < 2; i++) {
+      const h1Div: HTMLDivElement = new DocumentCreate().div();
+      h1Div.appendChild(
+        new DocumentCreate().title({ h: "h1", text: "Pokemon list" })
+      );
+      titleDisplay.appendChild(h1Div);
+    }
+    htmlDisplay.appendChild(titleDisplay);
+    htmlDisplay.appendChild(navigation);
+
+    const listDisplay: HTMLDivElement = new DocumentCreate({
+      className: "pokemon__list",
+    }).div();
 
     for (let array of pokemon) {
       const name = array.name;
@@ -59,16 +65,14 @@ export class ListPokemon {
       const idPokemon: string =
         "#" + infoPokemon.id.toString().padStart(5, "0");
 
-      listDisplay.innerHTML += displayPokemon(
-        infoPokemon.id.toString(),
-        name,
-        urlImg,
-        idPokemon
-      ).innerHTML;
+      listDisplay.appendChild(
+        displayPokemon(infoPokemon.id.toString(), name, urlImg, idPokemon)
+      );
     }
 
     htmlDisplay.appendChild(listDisplay);
-    htmlDisplay.innerHTML += this.navigation;
+    const navigation2: HTMLDivElement = await pagination.getPaginationPokemon();
+    htmlDisplay.appendChild(navigation2);
 
     return htmlDisplay;
   }

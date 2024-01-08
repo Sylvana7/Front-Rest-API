@@ -62,6 +62,7 @@ switch (true) {
   }
 }
 
+app!.innerHTML = "";
 if (result && result.innerHTML) {
   app!.appendChild(result);
 } else {
