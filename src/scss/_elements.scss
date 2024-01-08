@@ -11,6 +11,17 @@
     text-align: center;
     letter-spacing: 2px;
   }
+  .not_found {
+    font-family: $font-poke-solid;
+    letter-spacing: 2px;
+    font-size: 20px;
+    color: #ac0f0f;
+    background-color: hsla(0, 4%, 95%, 0.861);
+    padding: 30px;
+    border-radius: 10px;
+    margin: 20px auto;
+    text-align: center;
+  }
   .title {
     font-size: 24px;
     div {
@@ -22,7 +33,10 @@
       }
       &:last-child {
         position: relative;
-        background: linear-gradient(hsl($color_p, 74%, 70%) 20%, hsl(0, 77%, 45%) 90%);
+        background: linear-gradient(
+          hsl($color_p, 74%, 70%) 20%,
+          hsl(0, 77%, 45%) 90%
+        );
         background-clip: text;
         color: transparent;
       }
@@ -37,9 +51,6 @@
       margin-bottom: 20px;
       h1 {
         font-size: 22px;
-        &:first-child {
-          // font-family: $font-poke-solid;
-        }
       }
     }
 
@@ -65,7 +76,8 @@
         bottom: 0;
         margin: auto;
         border: 3px solid;
-        border-color: transparent transparent hsl(111, 100%, 50%) hsl(111, 100%, 50%);
+        border-color: transparent transparent hsl(111, 100%, 50%)
+          hsl(111, 100%, 50%);
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -201,8 +213,7 @@
           position: relative;
           border: 2px solid hsl(0, 97%, 23%);
           border-radius: 20px;
-          box-shadow:
-            2px 2px 4px hsl(60, 11%, 38%),
+          box-shadow: 2px 2px 4px hsl(60, 11%, 38%),
             inset 2px 2px 4px hsl(0, 0%, 30%);
           background-color: hsl($color_bk, 13%, 81%);
           width: 157px;

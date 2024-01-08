@@ -7,6 +7,7 @@ import { DisplayIcon } from "./icon";
 import "./scss/style.scss";
 import { FilterPokemon } from "./ts/services/filter";
 import { Routes } from "./ts/routes/routes";
+import { PokemonPage } from "./ts/controllers/pokemonPage";
 
 export const hostname: string = window.location.origin;
 const app = document.querySelector("#app");
@@ -35,6 +36,11 @@ switch (true) {
   case App.get("filter"): {
     const pagin = new FilterPokemon();
     result = pagin.filterPokemon();
+    break;
+  }
+  case App.get("pokemon"): {
+    const pagin = new PokemonPage(Routes.getNumPage());
+    result = await pagin.page();
     break;
   }
   case App.get("get"): {
