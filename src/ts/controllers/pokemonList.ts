@@ -1,4 +1,4 @@
-import { fetchPokemon, JSONObject } from "../services/fetch";
+import { FetchPokemon, JSONObject } from "../services/fetch";
 import { Routes } from "../routes/routes";
 import { getCookie } from "typescript-cookie";
 import { hostname } from "../../main";
@@ -22,9 +22,9 @@ export class ListPokemon {
     const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
     const offset = paginPage * limit;
 
-    this.fetchPokemon = await fetchPokemon(
+    this.fetchPokemon = await new FetchPokemon(
       `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`
-    );
+    ).list();
 
     const pagination = new PaginationPokemon(this.fetchPokemon.count);
     const pokemon: any = this.fetchPokemon.results;
@@ -56,7 +56,7 @@ export class ListPokemon {
     for (let array of pokemon) {
       const name = array.name;
       const url = array.url;
-      const infoPokemon: any = await fetchPokemon(url);
+      const infoPokemon: any = await new FetchPokemon(url).list();
 
       const urlSVG: string =
         infoPokemon.sprites.other.dream_world.front_default;

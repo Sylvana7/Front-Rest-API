@@ -1,4 +1,4 @@
-import { fetchPokemon, JSONObject } from "../services/fetch";
+import { FetchPokemon, JSONObject } from "../services/fetch";
 import { hostname } from "../../main";
 import { displayPokemon } from "../services/pokemonsDisplay";
 
@@ -9,16 +9,16 @@ export class SearchPokemon {
   constructor(public readonly post: string) {}
 
   private async number(): Promise<number> {
-    this.fetchPokemon = await fetchPokemon(
+    this.fetchPokemon = await new FetchPokemon(
       `https://pokeapi.co/api/v2/pokemon/?offset=1&limit=1`
-    );
+    ).list();
     return Number(this.fetchPokemon.count);
   }
 
   public async getSearchPokemon(): Promise<InnerHTML> {
-    this.fetchPokemon = await fetchPokemon(
+    this.fetchPokemon = await new FetchPokemon(
       `https://pokeapi.co/api/v2/pokemon/?offset=1&limit=${await this.number()}`
-    );
+    ).list();
     let regexPost: string = this.post;
     regexPost = regexPost.startsWith("*")
       ? regexPost.replace(/[^*]/, "")
@@ -45,7 +45,7 @@ export class SearchPokemon {
     for (let array of this.search.results) {
       const name: string = array.name.toString();
       const url: string = array.url.toString();
-      const infoPokemon: any = await fetchPokemon(url);
+      const infoPokemon: any = await new FetchPokemon(url).list();
 
       const urlSVG: string =
         infoPokemon.sprites.other.dream_world.front_default;
