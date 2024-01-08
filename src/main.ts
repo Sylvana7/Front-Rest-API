@@ -34,7 +34,7 @@ switch (true) {
   }
   case App.get("filter"): {
     const pagin = new FilterPokemon();
-    result = pagin.test();
+    result = pagin.filterPokemon();
     break;
   }
   case App.get("get"): {
