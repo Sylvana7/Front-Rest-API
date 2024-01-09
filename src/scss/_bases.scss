@@ -28,6 +28,9 @@ main {
     background-attachment: fixed;
     opacity: 0.5;
     z-index: -1;
+    @include paysage {
+      background-size: 100vw 100vh;
+    }
   }
 }
 
