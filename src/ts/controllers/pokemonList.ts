@@ -21,10 +21,9 @@ export class ListPokemon {
     const limit: number = Number(getCookie("limit"));
     const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
     const offset = paginPage * limit;
+    const url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`;
 
-    this.fetchPokemon = await new FetchPokemon(
-      `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`
-    ).list();
+    this.fetchPokemon = await new FetchPokemon(url).list();
 
     const pagination = new PaginationPokemon(this.fetchPokemon.count);
     const pokemon: any = this.fetchPokemon.results;
@@ -41,21 +40,11 @@ export class ListPokemon {
       className: "pokemon__list",
     }).div();
 
+    let i: number = 0;
     for (let array of pokemon) {
+      i++;
       const name = array.name;
-      const url = array.url;
-      const infoPokemon: any = await new FetchPokemon(url).list();
-
-      const urlSVG: string =
-        infoPokemon.sprites.other.dream_world.front_default;
-      const urlImg: string =
-        urlSVG != undefined ? urlSVG : `${hostname}/src/img/no_photo.png`;
-      const idPokemon: string =
-        "#" + infoPokemon.id.toString().padStart(5, "0");
-
-      listDisplay.appendChild(
-        displayPokemon(infoPokemon.id.toString(), name, urlImg, idPokemon)
-      );
+      listDisplay.appendChild(displayPokemon(i.toString(), name));
     }
 
     htmlDisplay.appendChild(listDisplay);
@@ -63,5 +52,48 @@ export class ListPokemon {
     htmlDisplay.appendChild(navigation2);
 
     return htmlDisplay;
+  }
+
+  public async loading(): Promise<void> {
+    const limit: number = Number(getCookie("limit"));
+    const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
+    const offset = paginPage * limit;
+    const url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`;
+
+    this.fetchPokemon = await new FetchPokemon(url).list();
+    const pokemon: any = this.fetchPokemon.results;
+
+    let i: number = 0;
+    for (let array of pokemon) {
+      i++;
+      const url = array.url;
+      const infoPokemon: any = await new FetchPokemon(url).list();
+      const idPoke: string = infoPokemon.id.toString();
+      const app_a: HTMLLinkElement | null = document.querySelector(`#__${i}`);
+      if (app_a) {
+        app_a.href = `${hostname}/pokemon/${idPoke}`;
+      }
+
+      const app_img: HTMLImageElement | null = document.querySelector(
+        `#__${i} div div img`
+      );
+
+      if (app_img) {
+        const urlSVG: string =
+          infoPokemon.sprites.other.dream_world.front_default;
+        const urlImg: string =
+          urlSVG != undefined ? urlSVG : `${hostname}/src/img/no_photo.png`;
+        app_img.src = urlImg;
+      }
+
+      const app_span: HTMLSpanElement | null = document.querySelector(
+        `#__${i} div span`
+      );
+
+      if (app_span) {
+        const idPokemon: string = "#" + idPoke.padStart(5, "0");
+        app_span.innerHTML = idPokemon;
+      }
+    }
   }
 }

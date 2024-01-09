@@ -1,4 +1,5 @@
 .app {
+  background-color: linear-gradient(hsl(0, 74%, 70%) 20%, hsl(0, 77%, 45%) 90%);
   h1,
   h2,
   h3,
@@ -110,6 +111,28 @@
   }
 }
 .pokemon {
+  .types {
+    @include typeColor("bug", 0);
+    @include typeColor("dark", 0);
+    @include typeColor("dragon", 0);
+    @include typeColor("electric", 0);
+    @include typeColor("fairy", 0);
+    @include typeColor("fighting", 0);
+    @include typeColor("fire", 0);
+    @include typeColor("flying", 0);
+    @include typeColor("ghost", 0);
+    @include typeColor("grass", 0);
+    @include typeColor("ground", 0);
+    @include typeColor("ice", 0);
+    @include typeColor("normal", 0);
+    @include typeColor("poison", 0);
+    @include typeColor("psychic", 0);
+    @include typeColor("rock", 0);
+    @include typeColor("shadow", 0);
+    @include typeColor("steel", 0);
+    @include typeColor("unknown", 0);
+    @include typeColor("water", 0);
+  }
   &__pagination {
     display: flex;
     flex-direction: row;

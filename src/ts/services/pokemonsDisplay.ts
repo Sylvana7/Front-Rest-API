@@ -1,19 +1,16 @@
-import { hostname } from "../../main";
 import { strUcFirst } from "./functions";
 
 export function displayPokemon(
-  infoPokemon: string,
-  name: string,
-  urlImg: string,
-  idPokemon: string
+  idPokemon: string,
+  name: string
 ): HTMLDivElement {
   const display: HTMLDivElement = document.createElement("div");
   display.innerHTML = `
-          <a href='${hostname}/pokemon/${infoPokemon}'>
+          <a href='' id='__${idPokemon}' class="upload">
             <div>
                 <h3>${strUcFirst(name)}</h3>
-                <div><img src=${urlImg}></div>
-                <span>${idPokemon}</span>
+                <div><img src='' ></div>
+                <span> Charging in loading </span>
             </div>
           </a>
         `;
