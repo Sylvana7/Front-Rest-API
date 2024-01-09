@@ -111,7 +111,6 @@
   }
 }
 .pokemon {
-
   .types {
     @include typeColor("bug", 0);
     @include typeColor("dark", 0);
@@ -133,7 +132,7 @@
     @include typeColor("steel", 0);
     @include typeColor("unknown", 0);
     @include typeColor("water", 0);
-
+  }
   &__identity {
     .characteristic {
       h2 {
@@ -146,7 +145,6 @@
         padding: 10px;
       }
     }
-
   }
   &__pagination {
     display: flex;
