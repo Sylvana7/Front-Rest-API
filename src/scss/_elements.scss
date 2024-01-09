@@ -110,6 +110,19 @@
   }
 }
 .pokemon {
+  &__identity {
+    .characteristic {
+      h2 {
+        font-size: 25px;
+        padding: 39px;
+      }
+      span {
+        font-size: 15px;
+        font-weight: bold;
+        padding: 10px;
+      }
+    }
+  }
   &__pagination {
     display: flex;
     flex-direction: row;
