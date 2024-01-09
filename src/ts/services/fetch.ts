@@ -1,12 +1,13 @@
-interface Pokemon {
+interface arrayDefault {
   name: string;
   url: string;
 }
 interface ability {
-  ability: Pokemon;
+  ability: arrayDefault;
   is_hidden: boolean;
   slot: number;
 }
+
 interface showdown {
   back_default: string;
   front_default: string;
@@ -15,19 +16,26 @@ interface sprite {
   other: { showdown: showdown };
 }
 
+interface type {
+  slot: number;
+  type: arrayDefault;
+}
+
 // Déclaration de l'interface JSONObject
 export interface JSONObject {
   count: number;
-  results: Pokemon[];
+  results: arrayDefault[];
 }
 export interface JSONpokemon {
-  forms: Pokemon[];
+  forms?: arrayDefault[] | [];
   abilities?: ability[] | [];
   sprites?: sprite;
+  weight?: number;
+  height?: number;
+  types?: type[] | [];
 }
 
 export class FetchPokemon {
-  static ability: string | URL | Request;
   constructor(public readonly url: string) {}
 
   public async info(): Promise<JSONpokemon> {

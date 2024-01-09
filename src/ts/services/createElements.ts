@@ -1,6 +1,9 @@
 import { hostname } from "../../main";
 
 export class DocumentCreate {
+  pokeType(arg0: { pokeType: any }): any {
+    throw new Error("Method not implemented.");
+  }
   private className: string[];
   private idName: string;
 
