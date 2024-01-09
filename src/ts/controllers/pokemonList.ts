@@ -34,19 +34,7 @@ export class ListPokemon {
 
     const htmlDisplay: HTMLDivElement = new DocumentCreate().div();
 
-    // Create Title
-    const titleDisplay: HTMLDivElement = new DocumentCreate({
-      className: "title",
-    }).div();
-
-    for (let i = 0; i < 2; i++) {
-      const h1Div: HTMLDivElement = new DocumentCreate().div();
-      h1Div.appendChild(
-        new DocumentCreate().title({ h: "h1", text: "Pokemon list" })
-      );
-      titleDisplay.appendChild(h1Div);
-    }
-    htmlDisplay.appendChild(titleDisplay);
+    htmlDisplay.appendChild(new DocumentCreate().titleDisplay("Pokemon list"));
     htmlDisplay.appendChild(navigation);
 
     const listDisplay: HTMLDivElement = new DocumentCreate({

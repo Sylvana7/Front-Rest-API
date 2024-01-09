@@ -8,9 +8,11 @@ import "./scss/style.scss";
 import { FilterPokemon } from "./ts/services/filter";
 import { Routes } from "./ts/routes/routes";
 import { PokemonPage } from "./ts/controllers/pokemonPage";
+import { DocumentCreate } from "./ts/services/createElements";
 
 export const hostname: string = window.location.origin;
 const app = document.querySelector("#app");
+const divForm = document.querySelector("#formSearch");
 export const secureCookie: boolean = false;
 
 if (!getCookie("limit")) {
@@ -19,6 +21,27 @@ if (!getCookie("limit")) {
 if (!getCookie("display")) {
   setCookie("display", "block", { expires: 365, secure: secureCookie });
 }
+
+const form: HTMLFormElement = new DocumentCreate({
+  className: "pokemon__search",
+}).form({ method: "GET", action: `${hostname}/get/` });
+
+form.appendChild(
+  new DocumentCreate().input({
+    placeholder: "Search...",
+    name: "form__search--pokemon",
+    required: true,
+  })
+);
+
+form.appendChild(
+  new DocumentCreate().button({
+    type: `submit`,
+    texte: `<i class="fa fa-search"></i>`,
+  })
+);
+
+divForm!.appendChild(form);
 
 let result: any = "";
 

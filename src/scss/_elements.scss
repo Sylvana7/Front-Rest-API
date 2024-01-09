@@ -23,7 +23,9 @@
     text-align: center;
   }
   .title {
-    font-size: 24px;
+    // h1 {
+    //   font-size: 24px;
+    // }
     div {
       width: 100%;
       &:first-child {
@@ -33,10 +35,7 @@
       }
       &:last-child {
         position: relative;
-        background: linear-gradient(
-          hsl($color_p, 74%, 70%) 20%,
-          hsl(0, 77%, 45%) 90%
-        );
+        background: linear-gradient(hsl($color_p, 74%, 70%) 20%, hsl(0, 77%, 45%) 90%);
         background-clip: text;
         color: transparent;
       }
@@ -76,8 +75,7 @@
         bottom: 0;
         margin: auto;
         border: 3px solid;
-        border-color: transparent transparent hsl(111, 100%, 50%)
-          hsl(111, 100%, 50%);
+        border-color: transparent transparent hsl(111, 100%, 50%) hsl(111, 100%, 50%);
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -226,19 +224,23 @@
           position: relative;
           border: 2px solid hsl(0, 97%, 23%);
           border-radius: 20px;
-          box-shadow: 2px 2px 4px hsl(60, 11%, 38%),
+          box-shadow:
+            2px 2px 4px hsl(60, 11%, 38%),
             inset 2px 2px 4px hsl(0, 0%, 30%);
           background-color: hsl($color_bk, 13%, 81%);
           width: 157px;
           height: 147px;
           h3 {
-            font-size: 18px;
+            font-size: 16px;
             padding-top: 10px;
             text-shadow: 0px 0px 3px hsl(0, 0%, 100%);
             color: hsl($color_p, 91%, 9%);
             background-color: hsl($color_p, 31%, 64%);
             border-radius: 20px 20px 0 0;
             margin: 2px 0 0 3px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
           div {
             position: relative;
