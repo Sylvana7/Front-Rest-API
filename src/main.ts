@@ -11,8 +11,8 @@ import { PokemonPage } from "./ts/controllers/pokemonPage";
 import { DocumentCreate } from "./ts/services/createElements";
 
 export const hostname: string = window.location.origin;
-const app = document.querySelector("#app");
-const divForm = document.querySelector("#formSearch");
+const app: HTMLDivElement | null = document.querySelector("#app");
+const divForm: HTMLDivElement | null = document.querySelector("#formSearch");
 export const secureCookie: boolean = false;
 
 if (!getCookie("limit")) {
@@ -69,10 +69,6 @@ switch (true) {
   case App.get("get"): {
     const url = new URL(window.location.href);
     const name: string | null = url.searchParams.get("pokemon") || "";
-    console.log("get");
-    // const redirect = (url: string, asLink = true) =>
-    //   asLink ? (window.location.href = url) : window.location.replace(url);
-    // redirect(hostname + "/search/" + name, false);
     window.location.href = hostname + "/search/" + name;
 
     break;
@@ -96,4 +92,8 @@ if (result && result.innerHTML) {
   app!.appendChild(result);
 } else {
   app!.innerHTML = htmlHome(result);
+}
+
+if (App.get("page") || App.get("")) {
+  new ListPokemon().loading();
 }
