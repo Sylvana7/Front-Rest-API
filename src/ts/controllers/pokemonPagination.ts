@@ -1,5 +1,5 @@
 import { Pagination } from "../services/paginations";
-import { Routes } from "../routes/routes";
+import { App } from "../routes/routes";
 import { hostname } from "../../main";
 
 export class PaginationPokemon {
@@ -7,7 +7,7 @@ export class PaginationPokemon {
   private currentPage: number;
 
   constructor(public readonly maxPokemon: number) {
-    this.currentPage = Routes.getNumPage();
+    this.currentPage = Number(App.getValue("page"));
   }
 
   public async getPaginationPokemon(): Promise<HTMLDivElement> {

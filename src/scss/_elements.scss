@@ -110,15 +110,6 @@
   }
 }
 .pokemon {
-  @each $color, $value in $colors_vibrant {
-    .#{$color} {
-      $color: $value;
-      background-color: $color;
-      border: 1px solid $color;
-      background-color: map-get($colors_pastel, $color);
-    }
-  }
-
   &__identity {
     .characteristic {
       h2 {
@@ -133,6 +124,7 @@
       .types {
         padding: 5px 10px;
         border-radius: 50px;
+        text-shadow: 2px 2px 2px hsl(0, 0%, 9%);
         &:not(:last-child) {
           margin: 0 8px 10px 0;
         }
@@ -243,6 +235,7 @@
     justify-content: center;
     align-items: center;
     margin: 5px;
+
     h1,
     h2,
     h3,
@@ -250,6 +243,7 @@
       padding: 10px 0 5px 0;
       text-align: center;
     }
+
     a {
       color: hsl(0, 0%, 14%);
       display: block;
@@ -267,6 +261,18 @@
           background-color: hsl($color_bk, 13%, 81%);
           width: 157px;
           height: 147px;
+
+          @each $color, $value in $colors_vibrant {
+            $test: #{$color};
+            &.#{$color} {
+              // background-color: $value;
+              border: 1px solid $value;
+              background-color: map-get($colors_pastel, $color);
+              @debug #{$color};
+              @debug map-get($colors_pastel, $color);
+            }
+          }
+
           h3 {
             font-size: 16px;
             padding-top: 10px;
@@ -325,14 +331,14 @@
       float: left;
       margin: 1em 0;
       width: 100%;
-      display: none;
+      // display: none;
 
       &.active {
         display: block;
       }
 
       h3 {
-        font-family: "Flexo-Medium", arial, sans-serif;
+        // font-family: "Flexo-Medium", arial, sans-serif;
         clear: both;
         color: #313131;
         float: left;
@@ -386,6 +392,7 @@
         background: #fff;
         position: relative;
         overflow: hidden;
+        padding: 0;
 
         li {
           background: transparent;

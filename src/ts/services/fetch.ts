@@ -1,34 +1,31 @@
-interface arrayDefault {
+export interface arrayDefault {
   name: string;
   url: string;
 }
-interface ability {
+export interface ability {
   ability: arrayDefault;
   is_hidden: boolean;
   slot: number;
 }
 
-interface showdown {
+export interface showdown {
   back_default: string;
   front_default: string;
 }
-interface sprite {
-  other: { showdown: showdown };
+export interface sprite {
+  other: { showdown: showdown; dream_world: showdown };
 }
 
-interface type {
+export interface type {
   slot: number;
   type: arrayDefault;
 }
 
-interface stat {
+export interface stat {
   base_stat: number;
   effort: number;
   stat: arrayDefault;
-}
-
-export interface JSONspecies {
-  color?: arrayDefault;
+  percentage?: number;
 }
 
 // Déclaration de l'interface JSONObject
@@ -36,6 +33,7 @@ export interface JSONObject {
   count: number;
   results: arrayDefault[];
 }
+
 export interface JSONpokemon {
   forms?: arrayDefault[] | [];
   abilities?: ability[] | [];
@@ -44,6 +42,14 @@ export interface JSONpokemon {
   height?: number;
   types?: type[] | [];
   stats?: stat[] | [];
+  id?: number;
+}
+
+export interface JSONspecies {
+  color?: arrayDefault;
+  habitat?: arrayDefault;
+  gender_rate?: number;
+  capture_rate?: number;
 }
 
 export class FetchPokemon {
