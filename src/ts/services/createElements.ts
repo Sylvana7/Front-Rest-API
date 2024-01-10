@@ -1,9 +1,6 @@
 import { hostname } from "../../main";
 
 export class DocumentCreate {
-  pokeType(arg0: { pokeType: any }): any {
-    throw new Error("Method not implemented.");
-  }
   private className: string[];
   private idName: string;
 
@@ -42,9 +39,9 @@ export class DocumentCreate {
     return anchor;
   }
 
-  public span(options: { texte?: string } = {}): HTMLElement {
+  public span(options: { texte?: string } = {}): HTMLSpanElement {
     const { texte = "" } = options;
-    const elemSpan: HTMLElement = document.createElement("span");
+    const elemSpan: HTMLSpanElement = document.createElement("span");
     elemSpan.innerHTML = texte;
     this.addIdClass(elemSpan);
     return elemSpan;
@@ -186,7 +183,6 @@ export class DocumentCreate {
 
     buttonElem.innerHTML = texte;
     return buttonElem;
-    //<button type="submit"><i class="fa fa-search"></i></button>
   }
 
   public element(options: { element?: string; texte?: string }): HTMLElement {
@@ -222,5 +218,16 @@ export class DocumentCreate {
       titleDisplay.appendChild(h1Div);
     }
     return titleDisplay;
+  }
+
+  public ul(): HTMLUListElement {
+    const label: HTMLUListElement = document.createElement("ul");
+    this.addIdClass(label);
+    return label;
+  }
+  public li(): HTMLLIElement {
+    const label: HTMLLIElement = document.createElement("li");
+    this.addIdClass(label);
+    return label;
   }
 }
