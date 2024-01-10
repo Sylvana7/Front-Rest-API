@@ -96,5 +96,10 @@ if (result && result.innerHTML) {
 }
 
 if (App.get("page") || App.get("")) {
-  new ListPokemon().loading();
+  await new ListPokemon().loading();
+}
+if (App.get("search")) {
+  const name: string = Routes.getSearch();
+  const pagin = new SearchPokemon(name);
+  await pagin.loading();
 }

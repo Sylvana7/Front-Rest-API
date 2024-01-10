@@ -17,7 +17,7 @@ class PokemonStatsGenerator {
 
   generateHTML(): string {
     const ulElement: HTMLUListElement = new DocumentCreate({
-      className: "pokemon-stats-info",
+      className: "stats-info",
     }).ul();
 
     this.stats.forEach((stat, index) => {
