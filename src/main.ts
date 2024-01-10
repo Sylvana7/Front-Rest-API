@@ -1,12 +1,10 @@
 import { getCookie, setCookie } from "typescript-cookie";
-import { App } from "./ts/routes/app";
 import { ListPokemon } from "./ts/controllers/pokemonList";
-import { SearchPokemon } from "./ts/controllers/pokemonSearch";
 import { htmlHome } from "./html/pokemonInnerHtml";
 import { DisplayIcon } from "./icon";
 import "./scss/style.scss";
 import { FilterPokemon } from "./ts/services/filter";
-import { Routes } from "./ts/routes/routes";
+import { Routes, App } from "./ts/routes/routes";
 import { PokemonPage } from "./ts/controllers/pokemonPage";
 import { DocumentCreate } from "./ts/services/createElements";
 
@@ -46,27 +44,23 @@ divForm!.appendChild(form);
 let result: any = "";
 
 switch (true) {
-  case App.get("icon"): {
+  case App.routes("icon"): {
     const classe = new DisplayIcon();
     result = classe.displayIcon();
     break;
   }
-  case App.get("page"): {
-    const pagin = new ListPokemon();
-    result = await pagin.getListPokemon();
-    break;
-  }
-  case App.get("filter"): {
+
+  case App.routes("filter"): {
     const pagin = new FilterPokemon();
     result = pagin.filterPokemon();
     break;
   }
-  case App.get("pokemon"): {
-    const pagin = new PokemonPage(Routes.getNumPage());
+  case App.routes("pokemon"): {
+    const pagin = new PokemonPage(Number(App.getValue("pokemon")));
     result = await pagin.page();
     break;
   }
-  case App.get("get"): {
+  case App.routes("get"): {
     const url = new URL(window.location.href);
     const name: string | null =
       url.searchParams.get("form__search--pokemon") || "";
@@ -74,11 +68,17 @@ switch (true) {
 
     break;
   }
-  case App.get("search"): {
-    const name: string = Routes.getSearch();
-    const pagin = new SearchPokemon(name);
-    result = await pagin.getSearchPokemon();
-    // console.log(result);
+  case App.routes("search"): {
+    const name: string = App.getValue("search");
+    if (name) {
+      const pagin = new ListPokemon(name);
+      result = await pagin.getListPokemon();
+    }
+    break;
+  }
+  case App.routes("page"): {
+    const pagin = new ListPokemon();
+    result = await pagin.getListPokemon();
     break;
   }
   default: {
@@ -95,11 +95,12 @@ if (result && result.innerHTML) {
   app!.innerHTML = htmlHome(result);
 }
 
-if (App.get("page") || App.get("")) {
+if (App.routes("search")) {
+  const name: string | null = App.getValue("search");
+  if (name) {
+    const pagin = new ListPokemon(name);
+    await pagin.loading();
+  }
+} else if (App.routes("page") || App.routes("")) {
   await new ListPokemon().loading();
-}
-if (App.get("search")) {
-  const name: string = Routes.getSearch();
-  const pagin = new SearchPokemon(name);
-  await pagin.loading();
 }

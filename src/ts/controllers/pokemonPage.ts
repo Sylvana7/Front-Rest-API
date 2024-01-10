@@ -1,6 +1,7 @@
 //  import { stat } from "fs";
 import { DocumentCreate } from "../services/createElements";
 import { FetchPokemon, JSONpokemon, JSONspecies } from "../services/fetch";
+import { PokemonStat, PokemonStatsGenerator } from "../services/gauge";
 
 export class PokemonPage {
   private urlApi: string = "https://pokeapi.co/api/v2/pokemon/";
@@ -19,8 +20,6 @@ export class PokemonPage {
     const color: string = fetchSpecies.color
       ? fetchSpecies.color.name
       : "no-color";
-
-    // const stats: string = fetchStats.stats ? fetchStats.stats.url : "";
 
     const title = (title: string): HTMLElement => {
       return new DocumentCreate().title({
@@ -49,10 +48,6 @@ export class PokemonPage {
 
       htmlDisplay.appendChild(attacksDisplay);
 
-      // const familyColorDisplay: HTMLDivElement = createDiv("characteristic");
-      // familyColorDisplay.appendChild(title("Color"));
-      // htmlDisplay.appendChild(familyColorDisplay);
-
       const abilitiesDisplay: HTMLDivElement = createDiv("characteristic");
       abilitiesDisplay.appendChild(title("Abilities"));
       for (let line of fetchPokemon.abilities || []) {
@@ -78,34 +73,31 @@ export class PokemonPage {
 
       htmlDisplay.appendChild(typeDisplay);
 
-      const statsDisplay: HTMLDivElement = createDiv("characteristic");
+      const statsDisplay: HTMLDivElement = createDiv(
+        "characteristic stats-info"
+      );
       statsDisplay.appendChild(title("Stats"));
+
+      const statsData: PokemonStat[] = [];
 
       for (let line of fetchPokemon.stats || []) {
         const name: string = line.stat.name;
         const baseStat: number = line.base_stat;
         const effort: number = line.effort;
-
-        const pokeStats: HTMLSpanElement = new DocumentCreate().span({
-          texte: `name: ${name}`,
+        statsData.push({
+          name: name,
+          value: effort,
+          percentage: baseStat,
+          stat: undefined,
+          effort: undefined,
+          base_stat: undefined,
         });
-        console.log(pokeStats);
-
-        const pokeStatsBaseStat: HTMLSpanElement = new DocumentCreate().span({
-          texte: `baseStat: ${baseStat}`,
-        });
-
-        console.log(pokeStatsBaseStat);
-
-        const pokeStatsEffort: HTMLSpanElement = new DocumentCreate().span({
-          texte: `effort: ${effort}`,
-        });
-        console.log(pokeStatsEffort);
-
-        statsDisplay.appendChild(pokeStats);
-        statsDisplay.appendChild(pokeStatsBaseStat);
-        statsDisplay.appendChild(pokeStatsEffort);
       }
+
+      const generator = new PokemonStatsGenerator(statsData);
+      const generatedHTML = generator.generateHTML();
+
+      statsDisplay.appendChild(generatedHTML);
       htmlDisplay.appendChild(statsDisplay);
 
       const characteristicDisplay: HTMLDivElement = createDiv("characteristic");

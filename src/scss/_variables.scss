@@ -1,4 +1,6 @@
 @use "sass:color";
+@use "sass:map";
+
 $color_p: 111;
 $color_bk: 205;
 $bck-color-primary: hsl($color_p, 100%, 66%);
@@ -55,7 +57,7 @@ $text-shadow-values: ();
 @mixin typeColor($name, $color, $saturation) {
     &.#{$name} {
         background-image: linear-gradient(
-            90deg,
+            180deg,
             hsl($color, $saturation * 1%, 40%),
             hsl($color, 77%, 70%),
             hsl($color, $saturation * 1%, 30%)
@@ -67,8 +69,8 @@ $text-shadow-values: ();
 
 $saturationVibrant: 80;
 $lightnessVibrant: 50;
-$pastel: 65;
-$lightnessPastel: 70;
+$saturationPastel: 100;
+$lightnessPastel: 80;
 
 @function pokeColor($color, $type: "pastel") {
     $saturation: if($type == "pastel", pastel, $saturationVibrant);
@@ -98,27 +100,26 @@ $lightnessPastel: 70;
 }
 
 $colors_pastel: (
-    "red": hsl(0, $pastel, $pastel),
-    "blue": hsl(240, $pastel, $pastel),
-    "yellow": hsl(60, $pastel, $pastel),
-    "green": hsl(120, $pastel, $pastel),
+    "red": hsl(0, $saturationPastel, $lightnessPastel),
+    "blue": hsl(240, $saturationPastel, $lightnessPastel),
+    "yellow": hsl(60, $saturationPastel, $lightnessPastel),
+    "green": hsl(120, $saturationPastel, $lightnessPastel),
     "black": hsl(0, 0%, 50%),
-    "brown": hsl(30, $pastel, $pastel),
-    "purple": hsl(270, $pastel, $pastel),
-    "gray": hsl(0, 0%, $pastel),
+    "brown": hsl(30, $saturationPastel, $lightnessPastel),
+    "purple": hsl(270, $saturationPastel, $lightnessPastel),
+    "gray": hsl(0, 0%, $saturationPastel),
     "white": hsl(0, 0%, 90%),
-    "pink": hsl(330, $pastel, $pastel)
+    "pink": hsl(330, $saturationPastel, $lightnessPastel)
 );
 
-$colors_vibrant: (
-    "red": hsl(0, $saturationVibrant, $lightnessVibrant),
-    "blue": hsl(240, $saturationVibrant, $lightnessVibrant),
-    "yellow": hsl(60, $saturationVibrant, $lightnessVibrant),
-    "green": hsl(120, $saturationVibrant, $lightnessVibrant),
-    "black": hsl(0, 0%, 0%),
-    "brown": hsl(30, $saturationVibrant, 30%),
-    "purple": hsl(270, $saturationVibrant, $lightnessVibrant),
-    "gray": hsl(0, 0%, $lightnessVibrant),
-    "white": hsl(0, 0%, 100%),
-    "pink": hsl(330, $saturationVibrant, $lightnessVibrant)
-);
+$colors_vibrant:
+    "red" hsl(0, $saturationVibrant, $lightnessVibrant),
+    "blue" hsl(240, $saturationVibrant, $lightnessVibrant),
+    "yellow" hsl(60, $saturationVibrant, $lightnessVibrant),
+    "green" hsl(120, $saturationVibrant, $lightnessVibrant),
+    "black" hsl(0, 0%, 0%),
+    "brown" hsl(30, $saturationVibrant, 30%),
+    "purple" hsl(270, $saturationVibrant, $lightnessVibrant),
+    "gray" hsl(0, 0%, $lightnessVibrant),
+    "white" hsl(0, 0%, 100%),
+    "pink" hsl(330, $saturationVibrant, $lightnessVibrant);

@@ -1,20 +1,88 @@
-export class Routes {
-  private static route: string[] = window.location.pathname.split("/");
+// Represents a segment with a type and value.
+interface Segment {
+  type: string;
+  value: string;
+}
 
+// Utility class for handling and parsing routes.
+export class Routes {
+  // Holds the current route from the window's pathname.
+  private static route: string = window.location.pathname;
+
+  // Constructor for the Routes class.
   constructor() {}
 
-  public static getRoutes(): string[] {
-    return Routes.route;
+  // Gets an array of segments parsed from the current route.
+  public static getRoutes(): Segment[] {
+    return Routes.parseString(Routes.route);
   }
 
-  public static getRoute(): string {
-    return Routes.route[1];
+  // Parses a string into an array of segments.
+  private static parseString(input: string): Segment[] {
+    const segments: Segment[] = [];
+
+    const parts = input.split("/");
+
+    for (let i = 0; i <= parts.length - 1; i++) {
+      const part = parts[i + 1];
+      if (part != undefined) {
+        if (i % 2 === 0) {
+          segments.push({ type: part, value: "" });
+        } else {
+          segments[segments.length - 1].value = part;
+        }
+      } else {
+        i++;
+      }
+    }
+    return segments;
+  }
+}
+
+// Main application class for route handling.
+export class App {
+  // Checks if a given route exists in the parsed routes.
+  public static routes(routeClient: string): boolean {
+    const routes = Routes.getRoutes();
+    return routes.some(
+      (segment) => segment.type === routeClient || segment.value === routeClient
+    );
   }
 
-  public static getNumPage(): number {
-    return Number(Routes.route[2]) > 0 ? Number(Routes.route[2]) : 1;
+  // Gets the value associated with a specific route.
+  public static getValue(routeClient: string): string {
+    const routes = Routes.getRoutes();
+    const matchingSegment = routes.find(
+      (segment) => segment.type === routeClient || segment.value === routeClient
+    );
+
+    return matchingSegment ? matchingSegment.value : "";
   }
-  public static getSearch(): string {
-    return Routes.route[2];
+
+  // Replaces the value of a specific route segment.
+  public static getReplace(routeClient: string, value: string): Segment[] {
+    const routes = Routes.getRoutes();
+
+    // Find the index of the segment that corresponds to routeClient.
+    const index = routes.findIndex(
+      (segment) => segment.type === routeClient || segment.value === routeClient
+    );
+
+    // If a matching segment is found, update its value.
+    if (index !== -1) {
+      routes[index].value = value;
+    }
+
+    return routes;
+  }
+
+  // Joins an array of segments into a formatted route string.
+  public static joinSegments(segments: Segment[]): string {
+    return segments
+      .map(
+        (segment) =>
+          `${segment.type}${segment.value ? "=" + segment.value : ""}`
+      )
+      .join("/");
   }
 }
