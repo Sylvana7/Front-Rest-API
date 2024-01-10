@@ -73,6 +73,14 @@ export class ListPokemon {
       if (app_a) {
         app_a.href = `${hostname}/pokemon/${idPoke}`;
       }
+      const app_color: HTMLSpanElement | null = document.querySelector(
+        `#__${i} div div characteristic`
+      );
+
+      if (app_color) {
+        const color: string = infoPokemon.fetchSpecies.color.name;
+        app_color.innerHTML = color;
+      }
 
       const app_img: HTMLImageElement | null = document.querySelector(
         `#__${i} div div img`

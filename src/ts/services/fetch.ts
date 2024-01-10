@@ -21,6 +21,16 @@ interface type {
   type: arrayDefault;
 }
 
+interface stat {
+  base_stat: number;
+  effort: number;
+  stat: arrayDefault;
+}
+
+export interface JSONspecies {
+  color?: arrayDefault;
+}
+
 // Déclaration de l'interface JSONObject
 export interface JSONObject {
   count: number;
@@ -33,6 +43,7 @@ export interface JSONpokemon {
   weight?: number;
   height?: number;
   types?: type[] | [];
+  stats?: stat[] | [];
 }
 
 export class FetchPokemon {
@@ -44,6 +55,14 @@ export class FetchPokemon {
       return { forms: [] };
     }
     const pokemon = (await container.json()) as JSONpokemon;
+    return Promise.resolve(pokemon);
+  }
+  public async infoSpecies(): Promise<JSONspecies> {
+    const container: Response = await fetch(this.url);
+    if (container.status === 404) {
+      return {};
+    }
+    const pokemon = (await container.json()) as JSONspecies;
     return Promise.resolve(pokemon);
   }
 
