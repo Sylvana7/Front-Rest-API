@@ -68,7 +68,8 @@ switch (true) {
   }
   case App.get("get"): {
     const url = new URL(window.location.href);
-    const name: string | null = url.searchParams.get("pokemon") || "";
+    const name: string | null =
+      url.searchParams.get("form__search--pokemon") || "";
     window.location.href = hostname + "/search/" + name;
 
     break;
@@ -95,5 +96,10 @@ if (result && result.innerHTML) {
 }
 
 if (App.get("page") || App.get("")) {
-  new ListPokemon().loading();
+  await new ListPokemon().loading();
+}
+if (App.get("search")) {
+  const name: string = Routes.getSearch();
+  const pagin = new SearchPokemon(name);
+  await pagin.loading();
 }

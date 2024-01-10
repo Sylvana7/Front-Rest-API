@@ -29,13 +29,13 @@ export class Pagination {
       numberElements = 0,
       currentPage = 0,
       numberPermanent = 3,
-      numberMiddle = 5,
+      numberMiddle = 2,
     } = options;
     this.url = url;
     this.numberElements = numberElements;
     this.currentPage = currentPage;
     this.numberPermanent = numberPermanent;
-    this.numberMiddle = numberMiddle;
+    this.numberMiddle = numberMiddle * 2;
   }
 
   // Get the next page number
