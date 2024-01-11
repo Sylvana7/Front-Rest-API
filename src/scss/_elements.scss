@@ -11,6 +11,7 @@
     text-align: center;
     letter-spacing: 2px;
   }
+
   .not_found {
     font-family: $font-poke-solid;
     letter-spacing: 2px;
@@ -23,9 +24,6 @@
     text-align: center;
   }
   .title {
-    // h1 {
-    //   font-size: 24px;
-    // }
     div {
       width: 100%;
       &:first-child {
@@ -48,9 +46,6 @@
     }
     .title {
       margin-bottom: 20px;
-      h1 {
-        font-size: 22px;
-      }
     }
 
     .loader {
@@ -113,11 +108,9 @@
   &__identity {
     .characteristic {
       h2 {
-        font-size: 25px;
         padding: 39px;
       }
       span {
-        font-size: 15px;
         font-weight: bold;
         padding: 10px;
       }
@@ -274,7 +267,6 @@
           }
 
           h3 {
-            font-size: 16px;
             padding-top: 10px;
             text-shadow: 0px 0px 3px hsl(0, 0%, 100%);
             color: hsl($color_p, 91%, 9%);
@@ -324,7 +316,7 @@
     }
   }
   &__identity {
-    .stats-info {
+    .stat {
       background-color: #a4a4a4;
       border-radius: 10px;
       display: block;
@@ -335,8 +327,25 @@
 
       &.active {
         display: block;
-      }
+        .gauge {
+          li {
+            &.meter {
+              // Define a variable for the number of steps
+              $steps: 100;
 
+              // Loop to generate styles for each step
+              @for $i from 0 through $steps {
+                $percentage: $i * 1%; // Calculate the percentage value
+
+                // Generate a class for each step with the corresponding top value
+                &.top_#{$i} {
+                  top: $percentage;
+                }
+              }
+            }
+          }
+        }
+      }
       h3 {
         // font-family: "Flexo-Medium", arial, sans-serif;
         clear: both;
@@ -353,7 +362,6 @@
       }
 
       > ul {
-        background: blue;
         clear: both;
         display: block;
         margin-bottom: 1.5em;
@@ -361,7 +369,7 @@
         width: 100%;
 
         > li {
-          float: left;
+          // float: left;
           margin-right: -100%;
           width: 12.95%;
           display: inline-block;
@@ -409,6 +417,8 @@
             position: absolute;
             top: 100%;
             z-index: 1;
+            top: 100%;
+            transition: top 0.5s cubic-bezier(0.42, 0, 0.1, 2.6);
           }
         }
       }

@@ -67,10 +67,10 @@ $text-shadow-values: ();
     }
 }
 
-$saturationVibrant: 80;
-$lightnessVibrant: 50;
-$saturationPastel: 100;
-$lightnessPastel: 80;
+$saturationVibrant: 80 * 1%;
+$lightnessVibrant: 50 * 1%;
+$saturationPastel: 100 * 1%;
+$lightnessPastel: 80 * 1%;
 
 @function pokeColor($color, $type: "pastel") {
     $saturation: if($type == "pastel", pastel, $saturationVibrant);

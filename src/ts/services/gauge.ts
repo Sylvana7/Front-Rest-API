@@ -34,7 +34,7 @@ export class PokemonStatsGenerator {
 
       meterElement.classList.add("meter");
       meterElement.setAttribute("data-value", stat.value.toString());
-      meterElement.style.top = `${stat.percentage}%`;
+      meterElement.classList.add(`top_${stat.percentage}`);
 
       for (let i = 0; i < 16; i++) {
         gaugeElement.appendChild(document.createElement("li"));

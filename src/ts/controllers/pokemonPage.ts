@@ -73,9 +73,7 @@ export class PokemonPage {
 
       htmlDisplay.appendChild(typeDisplay);
 
-      const statsDisplay: HTMLDivElement = createDiv(
-        "characteristic stats-info"
-      );
+      const statsDisplay: HTMLDivElement = createDiv("characteristic stat");
       statsDisplay.appendChild(title("Stats"));
 
       const statsData: PokemonStat[] = [];
