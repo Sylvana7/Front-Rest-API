@@ -4,7 +4,7 @@ import { htmlHome } from "./html/pokemonInnerHtml";
 import { DisplayIcon } from "./icon";
 import "./scss/style.scss";
 import { FilterPokemon } from "./ts/services/filter";
-import { Routes, App } from "./ts/routes/routes";
+import { App } from "./ts/routes/routes";
 import { PokemonPage } from "./ts/controllers/pokemonPage";
 import { DocumentCreate } from "./ts/services/createElements";
 
@@ -99,8 +99,8 @@ if (App.routes("search")) {
   const name: string | null = App.getValue("search");
   if (name) {
     const pagin = new ListPokemon(name);
-    await pagin.loading();
+    pagin.loading();
   }
 } else if (App.routes("page") || App.routes("")) {
-  await new ListPokemon().loading();
+  new ListPokemon().loading();
 }

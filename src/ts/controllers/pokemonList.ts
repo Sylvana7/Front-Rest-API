@@ -24,7 +24,8 @@ export class ListPokemon {
   // Constructor for initializing the class instance
   constructor(public readonly post: string = "") {
     // Get the current page number from the Routes class
-    this.currentPage = Number(App.getValue("page"));
+    this.currentPage =
+      Number(App.getValue("page")) <= 0 ? 1 : Number(App.getValue("page"));
   }
 
   private async communList(): Promise<void> {
@@ -63,11 +64,17 @@ export class ListPokemon {
     let i = 0;
     for (const line of fetchPokemon.results) {
       if (line.name.match(regex)) {
-        console.log(line.name);
         i++;
         this.fetchPokemon.results.push(line);
       }
     }
+
+    // Utilisation de la méthode slice pour extraire la sous-liste
+    this.fetchPokemon.results = this.fetchPokemon.results.slice(
+      this.currentPage * this.limit - this.limit,
+      this.currentPage * this.limit
+    );
+
     this.fetchPokemon.count = i;
     console.log(this.fetchPokemon.results);
   }
@@ -105,7 +112,6 @@ export class ListPokemon {
     for (let array of pokemon) {
       i++;
       const name = array.name;
-      console.log(name);
       listDisplay.appendChild(displayPokemon(i.toString(), name));
     }
 
@@ -146,11 +152,20 @@ export class ListPokemon {
       );
 
       if (app_img) {
-        const urlSVG: string = infoPokemon.sprites
-          ? infoPokemon.sprites.other.dream_world.front_default
-          : "";
-        const urlImg: string =
-          urlSVG != undefined ? urlSVG : `${hostname}/src/img/no_photo.png`;
+        let urlSVG: string | undefined =
+          infoPokemon.sprites?.other.dream_world.front_default;
+        let urlImg: string = "";
+
+        if (app_img) {
+          if (urlSVG != undefined) {
+            urlImg = urlSVG;
+          } else {
+            urlSVG = infoPokemon.sprites!.front_default || undefined;
+            urlImg =
+              urlSVG != undefined ? urlSVG : `${hostname}/src/img/no_photo.png`;
+          }
+        }
+        console.log(urlImg);
         app_img.src = urlImg;
         if (urlSVG != undefined) id.push(idPoke);
       }

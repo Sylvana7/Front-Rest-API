@@ -14,6 +14,7 @@ export interface showdown {
 }
 export interface sprite {
   other: { showdown: showdown; dream_world: showdown };
+  front_default?: string | undefined;
 }
 
 export interface type {

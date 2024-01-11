@@ -6,7 +6,9 @@ export function displayPokemon(
 ): HTMLDivElement {
   const display: HTMLDivElement = document.createElement("div");
   display.innerHTML = `
-          <a href='' id='__${idPokemon}' class="upload">
+          <a href='' id='__${idPokemon}' class="upload" title="${strUcFirst(
+    name
+  )}">
             <div>
                 <h3>${strUcFirst(name)}</h3>
                 <div><img src='' ></div>
