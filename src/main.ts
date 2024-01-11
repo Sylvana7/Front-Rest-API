@@ -122,4 +122,8 @@ if (App.routes("search")) {
   }
 } else if (App.routes("page") || App.routes("")) {
   new ListPokemon().loading();
+} else if (App.routes("pokemon")) {
+  setTimeout(() => {
+    document.querySelector(".stat")?.classList.add("active");
+  }, 1000);
 }

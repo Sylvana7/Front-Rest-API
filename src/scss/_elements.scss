@@ -319,14 +319,13 @@
     .stat {
       background-color: #a4a4a4;
       border-radius: 10px;
-      display: block;
+
       float: left;
       margin: 1em 0;
       width: 100%;
       // display: none;
 
       &.active {
-        display: block;
         .gauge {
           li {
             &.meter {
@@ -417,8 +416,7 @@
             position: absolute;
             top: 100%;
             z-index: 1;
-            top: 100%;
-            transition: top 0.5s cubic-bezier(0.42, 0, 0.1, 2.6);
+            transition: top 1.5s cubic-bezier(0.42, 0, 0.1, 2.6);
           }
         }
       }
