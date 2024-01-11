@@ -55,7 +55,6 @@ export class ListPokemon {
       : regexPost + "$";
 
     const regex = new RegExp(regexPost);
-    console.log(regex);
 
     const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
     const offset = paginPage * this.limit;
@@ -74,9 +73,7 @@ export class ListPokemon {
       this.currentPage * this.limit - this.limit,
       this.currentPage * this.limit
     );
-
     this.fetchPokemon.count = i;
-    console.log(this.fetchPokemon.results);
   }
 
   private async number(): Promise<number> {
@@ -165,7 +162,6 @@ export class ListPokemon {
               urlSVG != undefined ? urlSVG : `${hostname}/src/img/no_photo.png`;
           }
         }
-        console.log(urlImg);
         app_img.src = urlImg;
         if (urlSVG != undefined) id.push(idPoke);
       }

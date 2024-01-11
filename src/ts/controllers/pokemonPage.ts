@@ -7,7 +7,7 @@ export class PokemonPage {
   private urlApi: string = "https://pokeapi.co/api/v2/pokemon/";
   private urlApiSpecies: string = "https://pokeapi.co/api/v2/pokemon-species/";
 
-  constructor(public readonly number: number) {}
+  constructor(public readonly number: string) {}
 
   public async page(): Promise<HTMLDivElement> {
     let fetchPokemon: JSONpokemon = {};

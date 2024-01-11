@@ -1,12 +1,23 @@
 import { hostname } from "../../main";
 
+type Options = {
+  idName?: string;
+  className?: string;
+};
+
+export type ElemOptions = {
+  url?: string;
+  h?: string;
+  texte?: string;
+  addElem?: HTMLElement;
+  method?: string;
+};
+
 export class DocumentCreate {
   private className: string[];
   private idName: string;
 
-  constructor(
-    public readonly options: { idName?: string; className?: string } = {}
-  ) {
+  constructor(public readonly options: Options = {}) {
     const { className = "", idName = "" } = this.options;
     this.className = className != "" ? className.split(" ") : [];
     this.idName = idName;
@@ -22,48 +33,68 @@ export class DocumentCreate {
       element.setAttribute("id", this.idName);
     }
   }
-  public ahref(
-    options: { url?: string; texte?: string; title?: string } = {}
-  ): HTMLAnchorElement {
-    const { url = "", texte = "" } = options;
-    const anchor: HTMLAnchorElement = document.createElement("a");
-    anchor.innerHTML = texte;
+
+  private createElement<T extends HTMLElement>(
+    tagName: string,
+    options?: ElemOptions & Record<string, any>
+  ): T {
+    const elem: T = document.createElement(tagName) as T;
+    this.addIdClass(elem);
+
+    if (options) {
+      const { texte, addElem, ...rest } = options;
+      if (addElem) {
+        elem.appendChild(addElem);
+      }
+      if (texte) {
+        elem.innerHTML += texte;
+      }
+      for (const key in rest) {
+        if (rest.hasOwnProperty(key)) {
+          elem.setAttribute(key, rest[key]);
+        }
+      }
+    }
+
+    return elem;
+  }
+
+  public ahref(options: ElemOptions & Record<string, any>): HTMLAnchorElement {
+    const { url = "" } = options;
+    const anchor: HTMLAnchorElement = this.createElement("a", options);
     anchor.href = url;
-    this.addIdClass(anchor);
     return anchor;
   }
 
-  public div(): HTMLDivElement {
-    const anchor: HTMLDivElement = document.createElement("div");
-    this.addIdClass(anchor);
-    return anchor;
+  public div(options?: ElemOptions & Record<string, any>): HTMLDivElement {
+    const div: HTMLDivElement = this.createElement("div", options);
+    return div;
   }
 
-  public span(options: { texte?: string } = {}): HTMLSpanElement {
-    const { texte = "" } = options;
-    const elemSpan: HTMLSpanElement = document.createElement("span");
-    elemSpan.innerHTML = texte;
-    this.addIdClass(elemSpan);
-    return elemSpan;
+  public span(options?: ElemOptions & Record<string, any>): HTMLSpanElement {
+    const span: HTMLSpanElement = this.createElement("span", options);
+    return span;
   }
 
-  public title(options: { h?: string; texte?: string }): HTMLElement {
-    const { h = "", texte = "" } = options;
+  public title(options: ElemOptions & Record<string, any>): HTMLElement {
+    const { h = "" } = options;
     const isValidHeading = /^h[1-6]$/i.test(h);
     const hn = !isValidHeading ? "h1" : h;
-    const title: HTMLElement = document.createElement(hn);
-    title.innerHTML = texte;
-    this.addIdClass(title);
+    const title: HTMLElement = this.createElement(hn, options);
     return title;
   }
 
-  public form(options: { method?: string; action?: string }): HTMLFormElement {
-    const { method = "POST", action = `${hostname}` } = options;
-    const methodForm = method != "GET" ? "POST" : "GET;";
-    const elemForm: HTMLFormElement = document.createElement("form");
-    elemForm.setAttribute("method", methodForm);
-    elemForm.setAttribute("action", action);
-    this.addIdClass(elemForm);
+  public form(options: ElemOptions & Record<string, any>): HTMLFormElement {
+    const { method = "POST" } = options;
+    const methodForm = method !== "GET" ? "POST" : "GET";
+    const updatedOptions: ElemOptions & Record<string, any> = {
+      ...options,
+      method: methodForm,
+    };
+    const elemForm: HTMLFormElement = this.createElement(
+      "form",
+      updatedOptions
+    );
     return elemForm;
   }
 
@@ -140,8 +171,8 @@ export class DocumentCreate {
         "formm__label--" + (labelPosition === "after" ? "after" : "before"),
       ];
       const elemLabel: HTMLLabelElement = this.label({
-        forName: idName,
         texte: labelValue,
+        for: idName,
       });
 
       elemSpan.appendChild(elemLabel);
@@ -156,17 +187,8 @@ export class DocumentCreate {
     return elemInput;
   }
 
-  public label(options: {
-    forName?: string;
-    texte?: string;
-  }): HTMLLabelElement {
-    const { forName = "", texte = "" } = options;
-    const label: HTMLLabelElement = document.createElement("label");
-
-    label.innerHTML = texte;
-    label.setAttribute("for", forName);
-    this.addIdClass(label);
-
+  public label(options: ElemOptions & Record<string, any>): HTMLLabelElement {
+    const label: HTMLLabelElement = this.createElement("form", options);
     return label;
   }
 
@@ -225,9 +247,28 @@ export class DocumentCreate {
     this.addIdClass(label);
     return label;
   }
-  public li(): HTMLLIElement {
+  public li(options: { texte?: string } = {}): HTMLLIElement {
+    const { texte = "" } = options;
     const label: HTMLLIElement = document.createElement("li");
     this.addIdClass(label);
+    label.innerHTML = texte;
     return label;
   }
 }
+
+// const linkOptions: ElemOptions & Record<string, any> = {
+//   url: "https://www.example.com",
+//   texte: "Cliquez ici",
+//   "title": "Bonjour",
+//   "data-lien": "mon-lien",
+// };
+
+/* example:
+
+
+const myLink: HTMLAnchorElement = new DocumentCreate({idName: "myId"}).ahref(linkOptions);
+or
+const myLink: HTMLAnchorElement = new DocumentCreate({className: "myClass myOtherClass"}).ahref(linkOptions);
+or
+const myLink: HTMLAnchorElement = new DocumentCreate({}).ahref(linkOptions);
+*/
