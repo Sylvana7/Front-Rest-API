@@ -1,5 +1,9 @@
+// import { Types } from "typescript-cookie";
 import { hostname } from "../../main";
 import { DocumentCreate } from "../services/createElements";
+import { FetchPokemon, JSONObject } from "../services/fetch";
+// import { JSONObject, ability, type } from "../services/fetch";
+// import { types } from "util";
 
 export class GenerateHtml {
   public logo() {
@@ -55,7 +59,29 @@ export class GenerateHtml {
     const form: HTMLDivElement | null = document.querySelector("#formSearch");
     const formFilter: HTMLFormElement = new DocumentCreate({
       className: "pokemon__filter",
-    }).form({ method: "GET", action: `${hostname}/get/` });
+    }).form({ method: "GET", action: `${hostname}/getFilter/` });
+
+    const arrayOfOptions = ["pokemon-color", "ability", "type"];
+    arrayOfOptions.forEach(async (arrayText) => {
+      const selectElement = document.createElement("select");
+      selectElement.setAttribute(
+        "name",
+        arrayText.replace("pokemon-color", "color")
+      );
+      const url = `https://pokeapi.co/api/v2/${arrayText}`;
+      const fetch: JSONObject = await new FetchPokemon(url).list();
+      const optionElement = document.createElement("option");
+      optionElement.value = "0";
+      optionElement.text = `--${arrayText.replace("pokemon-color", "color")}--`;
+      selectElement.appendChild(optionElement);
+      fetch.results.forEach(async (optionText) => {
+        const optionElement = document.createElement("option");
+        optionElement.value = optionText.name;
+        optionElement.text = optionText.name;
+        selectElement.appendChild(optionElement);
+      });
+      formFilter?.appendChild(selectElement);
+    });
 
     formFilter.appendChild(
       new DocumentCreate().button({
