@@ -6,6 +6,17 @@ import { PokemonStat, PokemonStatsGenerator } from "../services/gauge";
 export class PokemonPage {
   private urlApi: string = "https://pokeapi.co/api/v2/pokemon/";
   private urlApiSpecies: string = "https://pokeapi.co/api/v2/pokemon-species/";
+  private title = (texte: string): HTMLElement => {
+    return new DocumentCreate().title({
+      h: "h3",
+      texte,
+    });
+  };
+  private createDiv = (className: string): HTMLDivElement => {
+    return new DocumentCreate({
+      className,
+    }).div();
+  };
 
   constructor(public readonly number: number) {}
 
@@ -21,20 +32,20 @@ export class PokemonPage {
       ? fetchSpecies.color.name
       : "no-color";
 
-    const title = (title: string): HTMLElement => {
-      return new DocumentCreate().title({
-        h: "h3",
-        texte: title,
-      });
-    };
-    const createDiv = (className: string): HTMLDivElement => {
-      return new DocumentCreate({
-        className: className,
-      }).div();
-    };
-
     const htmlDisplay: HTMLDivElement = new DocumentCreate({
       className: "pokemon__identity",
+    }).div();
+    const contentDisplay: HTMLDivElement = new DocumentCreate({
+      className: "pokemon__identity--display",
+    }).div();
+    const contentDisplayL: HTMLDivElement = new DocumentCreate({
+      className: "pokemon__identity--display--left",
+    }).div();
+    const contentDisplayR: HTMLDivElement = new DocumentCreate({
+      className: "pokemon__identity--display--right",
+    }).div();
+    const contentDisplayI: HTMLDivElement = new DocumentCreate({
+      className: "pokemon__identity--img",
     }).div();
 
     if (fetchPokemon.forms) {
@@ -43,40 +54,39 @@ export class PokemonPage {
       }).titleDisplay(fetchPokemon.forms[0].name);
       htmlDisplay.appendChild(titleDisplay);
 
-      const attacksDisplay: HTMLDivElement = createDiv("characteristic");
-      attacksDisplay.appendChild(title("Attacks"));
+      const attacksDisplay: HTMLDivElement = this.createPage({
+        className: "attack",
+        title: "Attacks",
+      });
+      contentDisplayR.appendChild(attacksDisplay);
 
-      htmlDisplay.appendChild(attacksDisplay);
-
-      const abilitiesDisplay: HTMLDivElement = createDiv("characteristic");
-      abilitiesDisplay.appendChild(title("Abilities"));
+      let span: span[] = [];
       for (let line of fetchPokemon.abilities || []) {
-        abilitiesDisplay.appendChild(
-          new DocumentCreate().span({ texte: line.ability.name })
-        );
+        span.push({ texte: line.ability.name });
       }
-      htmlDisplay.appendChild(abilitiesDisplay);
+      const abilitiesDisplay: HTMLDivElement = this.createPage({
+        className: "ability",
+        title: "Abilities",
+        span,
+      });
+      contentDisplayR.appendChild(abilitiesDisplay);
 
-      const typeDisplay: HTMLDivElement = createDiv("characteristic");
-      typeDisplay.appendChild(title("Type"));
-
+      span = [];
       for (let line of fetchPokemon.types || []) {
-        // const slot: number = line.slot;
         const name: string = line.type.name;
-        // const url: string = line.type.url;
-
-        const pokeType: HTMLSpanElement = new DocumentCreate({
-          className: `types ${name}`,
-        }).span({ texte: name });
-        typeDisplay.appendChild(pokeType);
+        span.push({ className: `types ${name}`, texte: line.type.name });
       }
+      const typeDisplay: HTMLDivElement = this.createPage({
+        className: "type",
+        title: "Types",
+        span,
+      });
+      contentDisplayR.appendChild(typeDisplay);
 
-      htmlDisplay.appendChild(typeDisplay);
-
-      const statsDisplay: HTMLDivElement = createDiv(
-        "characteristic stats-info"
+      const statsDisplay: HTMLDivElement = this.createDiv(
+        "characteristic stat"
       );
-      statsDisplay.appendChild(title("Stats"));
+      statsDisplay.appendChild(this.title("Stats"));
 
       const statsData: PokemonStat[] = [];
 
@@ -93,61 +103,82 @@ export class PokemonPage {
           base_stat: undefined,
         });
       }
-
       const generator = new PokemonStatsGenerator(statsData);
       const generatedHTML = generator.generateHTML();
-
       statsDisplay.appendChild(generatedHTML);
-      htmlDisplay.appendChild(statsDisplay);
+      contentDisplayL.appendChild(statsDisplay);
 
-      const characteristicDisplay: HTMLDivElement = createDiv("characteristic");
-      characteristicDisplay.appendChild(title("Characteristic"));
+      span = [];
       const weight: string = fetchPokemon.weight
         ? fetchPokemon.weight / 10 + "kg"
         : "";
       const height: string = fetchPokemon.height
         ? fetchPokemon.height * 10 + "cm"
         : "";
-      const colorChar: HTMLSpanElement = new DocumentCreate({
-        className: `characteristic ${color}`,
-      }).span({ texte: color });
+      span.push({ className: `${color}`, texte: color });
+      span.push({ texte: weight });
+      span.push({ texte: height });
 
-      const pokeCharW: HTMLSpanElement = new DocumentCreate({
-        className: `characteristic ${weight}`,
-      }).span({ texte: weight });
+      const characteristicDisplay: HTMLDivElement = this.createPage({
+        className: "char",
+        title: "Characteristic",
+        span,
+      });
+      contentDisplayR.appendChild(characteristicDisplay);
 
-      const pokeCharH: HTMLSpanElement = new DocumentCreate({
-        className: `characteristic ${height}`,
-      }).span({ texte: height });
+      const flavorTextEntriesDisplay: HTMLDivElement = this.createPage({
+        className: "flavor",
+        title: "Flavor",
+      });
+      contentDisplayL.appendChild(flavorTextEntriesDisplay);
 
-      characteristicDisplay.appendChild(colorChar);
-      characteristicDisplay.appendChild(pokeCharW);
-      characteristicDisplay.appendChild(pokeCharH);
-
-      htmlDisplay.appendChild(characteristicDisplay);
-
-      const flavorTextEntriesDisplay: HTMLDivElement =
-        createDiv("characteristic");
-      flavorTextEntriesDisplay.appendChild(title("Flavor text entries"));
-      htmlDisplay.appendChild(flavorTextEntriesDisplay);
-
-      const img: HTMLDivElement = createDiv("img characteristic");
-      img.appendChild(
+      contentDisplayI.appendChild(
         new DocumentCreate().img({
           src: fetchPokemon.sprites?.other.showdown.back_default,
         })
       );
-      img.appendChild(
+      contentDisplayI.appendChild(
         new DocumentCreate().img({
           src: fetchPokemon.sprites?.other.showdown.front_default,
         })
       );
-
-      htmlDisplay.appendChild(img);
+      contentDisplay.appendChild(contentDisplayL);
+      contentDisplay.appendChild(contentDisplayR);
+      htmlDisplay.appendChild(contentDisplayI);
+      htmlDisplay.appendChild(contentDisplay);
     } else {
       htmlDisplay.classList.add("not_found");
       htmlDisplay.innerHTML = "Not found";
     }
     return htmlDisplay;
   }
+
+  private createPage(options: pokePage): HTMLDivElement {
+    const char: HTMLDivElement = this.createDiv("characteristic");
+    if (options.className) char.classList.add(options.className);
+    char.appendChild(this.title(options.title));
+    const div: HTMLDivElement = this.createDiv("");
+    for (let line of options.span || []) {
+      const className: string = line.className ? line.className : "";
+      const texte: string = line.texte;
+      const pokeCharH: HTMLSpanElement = new DocumentCreate({ className }).span(
+        {
+          texte,
+        }
+      );
+      div.appendChild(pokeCharH);
+    }
+    char.appendChild(div);
+    return char;
+  }
+}
+
+interface pokePage {
+  className?: string;
+  title: string;
+  span?: span[];
+}
+interface span {
+  className?: string;
+  texte: string;
 }
