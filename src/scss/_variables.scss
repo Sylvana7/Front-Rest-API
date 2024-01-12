@@ -1,5 +1,6 @@
 @use "sass:color";
 @use "sass:map";
+@use "sass:math";
 
 $color_p: 111;
 $color_bk: 205;
@@ -21,22 +22,18 @@ $breakpoints: (
   pt-screen-min: 768px,
   pt-screen-max: 1049px,
   gd-screen-min: 1050px,
-  very-gd-screen-min: 1205px,
+  very-gd-screen-min: 1205px
 );
 $orientation: (
   paysage: landscape,
-  portrait: portrait,
+  portrait: portrait
 );
 
 $text-shadow-values: ();
 /* contour */
 
 @for $i from 1 through 2 {
-  $text-shadow-values: append(
-    $text-shadow-values,
-    0 0 4px hsl(0, 100%, 18%),
-    comma
-  );
+  $text-shadow-values: append($text-shadow-values, 0 0 4px hsl(0, 100%, 18%), comma);
 }
 /* relief */
 @for $i from 1 through 7 {
@@ -104,6 +101,7 @@ $lightnessPastel: 80 * 1%;
 }
 
 $colors_pastel: (
+  "default": rgb(211, 211, 211),
   "red": hsl(0, $saturationPastel, $lightnessPastel),
   "blue": hsl(240, $saturationPastel, $lightnessPastel),
   "yellow": hsl(60, $saturationPastel, $lightnessPastel),
@@ -113,14 +111,41 @@ $colors_pastel: (
   "purple": hsl(270, $saturationPastel, $lightnessPastel),
   "gray": hsl(0, 0%, $saturationPastel),
   "white": hsl(0, 0%, 90%),
-  "pink": hsl(330, $saturationPastel, $lightnessPastel),
+  "pink": hsl(330, $saturationPastel, $lightnessPastel)
 );
 
-$colors_vibrant: "red" hsl(0, $saturationVibrant, $lightnessVibrant),
+$colors_vibrant:
+  "default" rgb(245, 242, 242),
+  "red" hsl(0, $saturationVibrant, $lightnessVibrant),
   "blue" hsl(240, $saturationVibrant, $lightnessVibrant),
   "yellow" hsl(60, $saturationVibrant, $lightnessVibrant),
   "green" hsl(120, $saturationVibrant, $lightnessVibrant),
-  "black" hsl(0, 0%, 0%), "brown" hsl(30, $saturationVibrant, 30%),
+  "black" hsl(0, 0%, 0%),
+  "brown" hsl(30, $saturationVibrant, 30%),
   "purple" hsl(270, $saturationVibrant, $lightnessVibrant),
-  "gray" hsl(0, 0%, $lightnessVibrant), "white" hsl(0, 0%, 100%),
+  "gray" hsl(0, 0%, $lightnessVibrant),
+  "white" hsl(0, 0%, 100%),
   "pink" hsl(330, $saturationVibrant, $lightnessVibrant);
+
+$base-size: 3; // Taille de police de base pour h1
+$base-spacing: 6; // Espacement de base
+
+// @function calculate-font-size($level) {
+//   $calc: math.pow(1.5, $level - 1);
+//   @return $base-size * $calc; // Utilisation de la fonction pow()
+// }
+
+@function calculate-font-size($level) {
+  @debug $level;
+  $levelNumber: calc($level * 1);
+  $calc: pow(1.5, $levelNumber - 1);
+  $multipl: calc($base-size * $calc);
+  @return calc($multipl * 1em);
+}
+
+@function calculate-letter-spacing($level) {
+  $levelNumber: calc($level * 1);
+  $diff: calc($base-spacing - $levelNumber);
+  $max: max($diff, 1);
+  @return calc($max * 1px);
+}

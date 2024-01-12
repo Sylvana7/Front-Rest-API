@@ -1,4 +1,5 @@
 //  import { stat } from "fs";
+import { hostname } from "../../main";
 import { DocumentCreate } from "../services/createElements";
 import { FetchPokemon, JSONpokemon, JSONspecies } from "../services/fetch";
 import { PokemonStat, PokemonStatsGenerator } from "../services/gauge";
@@ -7,8 +8,8 @@ export class PokemonPage {
   private urlApi: string = "https://pokeapi.co/api/v2/pokemon/";
   private urlApiSpecies: string = "https://pokeapi.co/api/v2/pokemon-species/";
   private color: string = "";
-  private title = (texte: string): HTMLElement => {
-    return new DocumentCreate().title({
+  private title = (texte: string, className: string): HTMLElement => {
+    return new DocumentCreate({ className }).title({
       h: "h3",
       texte,
     });
@@ -44,7 +45,7 @@ export class PokemonPage {
       className: "pokemon__identity--display--right",
     }).div();
     const contentDisplayI: HTMLDivElement = new DocumentCreate({
-      className: "pokemon__identity--img",
+      className: `pokemon__identity--img`,
       idName: "identity",
     }).div();
 
@@ -86,7 +87,7 @@ export class PokemonPage {
       const statsDisplay: HTMLDivElement = this.createDiv(
         "characteristic stat"
       );
-      statsDisplay.appendChild(this.title("Stats"));
+      statsDisplay.appendChild(this.title("Stats", this.color));
 
       const statsData: PokemonStat[] = [];
 
@@ -133,17 +134,30 @@ export class PokemonPage {
         title: "Flavor",
       });
       contentDisplayL.appendChild(flavorTextEntriesDisplay);
+      const arraySrc: string[] = [];
+      arraySrc.push(
+        fetchPokemon.sprites
+          ? fetchPokemon.sprites.other.showdown.back_default
+          : `${hostname}/src/img/no_photo.png`
+      );
+      arraySrc.push(
+        fetchPokemon.sprites
+          ? fetchPokemon.sprites?.other.showdown.front_default
+          : `${hostname}/src/img/no_photo.png`
+      );
 
-      contentDisplayI.appendChild(
-        new DocumentCreate().img({
-          src: fetchPokemon.sprites?.other.showdown.back_default,
-        })
-      );
-      contentDisplayI.appendChild(
-        new DocumentCreate().img({
-          src: fetchPokemon.sprites?.other.showdown.front_default,
-        })
-      );
+      for (let line of arraySrc) {
+        const div: HTMLDivElement = new DocumentCreate({
+          className: "default",
+        }).div();
+        div.appendChild(
+          new DocumentCreate().img({
+            src: line,
+          })
+        );
+        contentDisplayI.appendChild(div);
+      }
+
       contentDisplay.appendChild(contentDisplayL);
       contentDisplay.appendChild(contentDisplayR);
       htmlDisplay.appendChild(contentDisplayI);
@@ -158,7 +172,7 @@ export class PokemonPage {
   private createPage(options: pokePage): HTMLDivElement {
     const char: HTMLDivElement = this.createDiv("characteristic");
     if (options.className) char.classList.add(options.className);
-    char.appendChild(this.title(options.title));
+    char.appendChild(this.title(options.title, this.color));
     const div: HTMLDivElement = this.createDiv("");
     for (let line of options.span || []) {
       line.className = this.color + " " + line.className;
