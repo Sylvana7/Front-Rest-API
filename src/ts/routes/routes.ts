@@ -85,4 +85,19 @@ export class App {
       )
       .join("/");
   }
+
+  public transformUrlToString(): string {
+    const urlObj = new URL(window.location.pathname);
+    const params = new URLSearchParams(urlObj.search);
+
+    // Obtenir les paramètres de requête sous forme de tableau de paires clé-valeur
+    const queryParams = Array.from(params.entries());
+
+    // Mapper les paires clé-valeur en une chaîne de caractères
+    const transformedString = queryParams
+      .map(([key, value]) => `${key}/${value}`)
+      .join("/");
+
+    return transformedString;
+  }
 }

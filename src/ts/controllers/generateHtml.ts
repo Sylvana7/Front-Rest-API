@@ -15,10 +15,8 @@ export class GenerateHtml {
   public nav() {
     document.querySelector("nav")?.appendChild(new DocumentCreate().ul());
     const UL = document.querySelector("nav ul");
-    console.log("nav");
 
     if (UL) {
-      console.log("UL");
       let link = new DocumentCreate().ahref({
         url: hostname,
       });

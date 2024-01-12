@@ -27,6 +27,11 @@ new GenerateHtml().filter();
 
 let result: any = "";
 
+console.log(window.location.pathname);
+console.log(window.location.origin);
+console.log(window.location.hash);
+console.log(window.location.href);
+
 switch (true) {
   case App.routes("icon"): {
     const classe = new DisplayIcon();
