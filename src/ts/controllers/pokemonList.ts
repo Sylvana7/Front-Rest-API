@@ -6,7 +6,7 @@ import {
   JSONspecies,
   arrayDefault,
 } from "../services/fetch";
-import { App, Routes } from "../routes/routes";
+import { App } from "../routes/routes";
 import { getCookie } from "typescript-cookie";
 import { hostname } from "../../main";
 import { PaginationPokemon } from "./pokemonPagination";
@@ -56,8 +56,8 @@ export class ListPokemon {
 
     const regex = new RegExp(regexPost);
 
-    const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
-    const offset = paginPage * this.limit;
+    // const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
+    // const offset = paginPage * this.limit;
 
     this.fetchPokemon.results = [];
     let i = 0;
@@ -82,8 +82,8 @@ export class ListPokemon {
     ).list();
     const type: string = "normal";
 
-    const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
-    const offset = paginPage * this.limit;
+    // const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
+    // const offset = paginPage * this.limit;
 
     this.fetchPokemon.results = [];
     let i = 0;
