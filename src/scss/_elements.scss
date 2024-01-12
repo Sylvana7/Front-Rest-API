@@ -24,6 +24,9 @@
     text-align: center;
   }
   .title {
+    h1 {
+      font-size: 3.2em;
+    }
     div {
       width: 100%;
       &:first-child {
@@ -124,9 +127,6 @@
         font-weight: bold;
       }
       .types {
-        padding: 5px 10px;
-        border-radius: 50px;
-        text-shadow: 2px 2px 2px hsl(0, 0%, 9%);
         &:not(:last-child) {
           margin: 0 8px 10px 0px;
         }
@@ -159,6 +159,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
+    margin: 15px auto;
     &:last-child {
       margin-bottom: 10px;
     }
@@ -176,7 +177,7 @@
       display: inline-block;
       width: 20px;
       font-family: $font-poke-solid;
-      line-height: 23px;
+      line-height: 15px;
       &:hover {
         background-color: hsl($color_bk, 22%, 93%);
       }
@@ -269,8 +270,7 @@
               // background-color: $value;
               border: 1px solid $value;
               background-color: map-get($colors_pastel, $color);
-              // @debug #{$color};
-              // @debug map-get($colors_pastel, $color);
+              box-shadow: 3px 3px 2px $color;
             }
           }
 
@@ -324,107 +324,159 @@
     }
   }
   &__identity {
-    .stat {
-      background-color: #a4a4a4;
-      border-radius: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
 
-      float: left;
-      margin: 1em 0;
-      width: 100%;
-      // display: none;
+    &--img {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      img {
+        width: 85px;
+      }
+    }
+    &--display {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      flex-direction: row;
 
-      &.active {
-        .gauge {
-          li {
-            &.meter {
-              // Define a variable for the number of steps
-              $steps: 100;
+      > div {
+        flex: 1;
+        margin: 5px;
+        margin-bottom: 70px;
+        padding: 5px;
+      }
+      .characteristic {
+        margin-bottom: 30px;
+        h3 {
+          border: 1px solid black;
+          border-radius: 10px 10px 0 0;
+          background-color: hsl($color_p, 31%, 64%);
+          color: black;
+          text-align: center;
+          padding: 10px;
+          top: 10px;
+        }
+        > div {
+          background-color: hsla(0, 0%, 64%, 0.773);
+          border-radius: 0 0 10px 10px;
+          text-align: center;
+          padding: 10px 5px;
+          min-height: 50px;
+          span:not(.stat) {
+            color: white;
+            display: inline-block;
+            border-radius: 50px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 5px 10px;
+            text-shadow: 2px 2px 2px hsl(0, 0%, 9%);
+            background-image: linear-gradient(
+              180deg,
+              hsl(100, 52%, 40%),
+              hsl(100, 77%, 70%),
+              hsl(100, 52%, 30%)
+            );
+            box-shadow: 3px 3px 2px hsl(222, 82%, 20%);
+            @each $color, $value in $colors_vibrant {
+              $test: #{$color};
+              &.#{$color} {
+                // background-color: $value;
+                border: 1px solid $value;
+                background-color: map-get($colors_pastel, $color);
+                background-image: linear-gradient(
+                  180deg,
+                  $value,
+                  map-get($colors_pastel, $color),
+                  $value
+                );
+              }
+            }
+            border: 2px solid hsl(100, 52%, 25%);
+            &:not(:last-child) {
+              margin: 0 8px 10px 0px;
+            }
+          }
+        }
+        &.stat {
+          &.active {
+            .gauge {
+              li {
+                &.meter {
+                  // Define a variable for the number of steps
+                  $steps: 100;
 
-              // Loop to generate styles for each step
-              @for $i from 0 through $steps {
-                $percentage: $i * 1%; // Calculate the percentage value
+                  // Loop to generate styles for each step
+                  @for $i from 0 through $steps {
+                    $percentage: $i * 1%; // Calculate the percentage value
 
-                // Generate a class for each step with the corresponding top value
-                &.top_#{$i} {
-                  top: $percentage;
+                    // Generate a class for each step with the corresponding top value
+                    &.top_#{$i} {
+                      top: $percentage;
+                    }
+                  }
                 }
               }
             }
           }
-        }
-      }
-      h3 {
-        // font-family: "Flexo-Medium", arial, sans-serif;
-        clear: both;
-        color: #313131;
-        float: left;
-        font-size: 100%;
-        margin: 0.75em 1.5em 1.5em;
-        text-transform: none;
+          > div {
+            > ul {
+              clear: both;
+              display: block;
+              margin-bottom: 1.5em;
+              position: relative;
+              padding: 0;
+              > li {
+                // float: left;
+                margin-right: -100%;
+                width: 12.95%;
+                display: inline-block;
+                margin: 0 1.5625% 1.25em 0;
 
-        body.ru & {
-          font-family: "Roboto", arial, sans-serif;
-          font-weight: 500;
-        }
-      }
+                span {
+                  font-family: "Roboto", arial, sans-serif;
+                  font-weight: bold;
+                  color: #212121;
+                  float: left;
+                  font-size: 62.5%;
+                  text-align: center;
+                  text-transform: none;
+                  width: 100%;
 
-      > ul {
-        clear: both;
-        display: block;
-        margin-bottom: 1.5em;
-        position: relative;
-        width: 100%;
-
-        > li {
-          // float: left;
-          margin-right: -100%;
-          width: 12.95%;
-          display: inline-block;
-          margin: 0 1.5625% 1.25em 0;
-
-          &.first {
-            margin-left: 7.2525%;
-          }
-
-          span {
-            font-family: "Roboto", arial, sans-serif;
-            font-weight: bold;
-            color: #212121;
-            float: left;
-            font-size: 62.5%;
-            text-align: center;
-            text-transform: none;
-            width: 100%;
-
-            @media (min-width: 1281px) and (max-width: 9999px) {
-              font-size: 75%;
+                  @media (min-width: 1281px) and (max-width: 9999px) {
+                    font-size: 75%;
+                  }
+                }
+              }
             }
-          }
-        }
-      }
 
-      .gauge {
-        background: #fff;
-        position: relative;
-        overflow: hidden;
-        padding: 0;
+            .gauge {
+              background: #fff;
+              position: relative;
+              overflow: hidden;
+              padding: 0;
 
-        li {
-          background: transparent;
-          border-bottom: 0.25em solid #a4a4a4;
-          height: 0.5em;
-          width: 100%;
-          position: relative;
-          z-index: 2;
+              li {
+                background: transparent;
+                border-bottom: 0.25em solid #a4a4a4;
+                height: 0.5em;
+                width: 100%;
+                position: relative;
+                z-index: 2;
 
-          &.meter {
-            background: #30a7d7;
-            border: none;
-            height: 120%;
-            position: absolute;
-            top: 100%;
-            z-index: 1;
-            transition: top 1.5s cubic-bezier(0.42, 0, 0.1, 2.6);
+                &.meter {
+                  background: #30a7d7;
+                  border: none;
+                  height: 120%;
+                  position: absolute;
+                  top: 100%;
+                  z-index: 1;
+                  transition: top 1.5s cubic-bezier(0.42, 0, 0.1, 2.6);
+                }
+              }
+            }
           }
         }
       }

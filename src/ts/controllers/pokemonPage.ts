@@ -6,6 +6,7 @@ import { PokemonStat, PokemonStatsGenerator } from "../services/gauge";
 export class PokemonPage {
   private urlApi: string = "https://pokeapi.co/api/v2/pokemon/";
   private urlApiSpecies: string = "https://pokeapi.co/api/v2/pokemon-species/";
+  private color: string = "";
   private title = (texte: string): HTMLElement => {
     return new DocumentCreate().title({
       h: "h3",
@@ -28,9 +29,7 @@ export class PokemonPage {
     fetchSpecies = await new FetchPokemon(
       this.urlApiSpecies + this.number
     ).infoSpecies();
-    const color: string = fetchSpecies.color
-      ? fetchSpecies.color.name
-      : "no-color";
+    this.color = fetchSpecies.color ? fetchSpecies.color.name : "no-color";
 
     const htmlDisplay: HTMLDivElement = new DocumentCreate({
       className: "pokemon__identity",
@@ -46,6 +45,7 @@ export class PokemonPage {
     }).div();
     const contentDisplayI: HTMLDivElement = new DocumentCreate({
       className: "pokemon__identity--img",
+      idName: "identity",
     }).div();
 
     if (fetchPokemon.forms) {
@@ -83,17 +83,10 @@ export class PokemonPage {
       });
       contentDisplayR.appendChild(typeDisplay);
 
-<<<<<<< HEAD
       const statsDisplay: HTMLDivElement = this.createDiv(
         "characteristic stat"
       );
       statsDisplay.appendChild(this.title("Stats"));
-=======
-      htmlDisplay.appendChild(typeDisplay);
-
-      const statsDisplay: HTMLDivElement = createDiv("characteristic stat");
-      statsDisplay.appendChild(title("Stats"));
->>>>>>> dba0f43b7e3c7ddb3182a25862e923fc57342b7d
 
       const statsData: PokemonStat[] = [];
 
@@ -112,7 +105,9 @@ export class PokemonPage {
       }
       const generator = new PokemonStatsGenerator(statsData);
       const generatedHTML = generator.generateHTML();
-      statsDisplay.appendChild(generatedHTML);
+      const divGenerator: HTMLDivElement = new DocumentCreate().div();
+      divGenerator.appendChild(generatedHTML);
+      statsDisplay.appendChild(divGenerator);
       contentDisplayL.appendChild(statsDisplay);
 
       span = [];
@@ -122,7 +117,7 @@ export class PokemonPage {
       const height: string = fetchPokemon.height
         ? fetchPokemon.height * 10 + "cm"
         : "";
-      span.push({ className: `${color}`, texte: color });
+      span.push({ texte: this.color });
       span.push({ texte: weight });
       span.push({ texte: height });
 
@@ -166,6 +161,7 @@ export class PokemonPage {
     char.appendChild(this.title(options.title));
     const div: HTMLDivElement = this.createDiv("");
     for (let line of options.span || []) {
+      line.className = this.color + " " + line.className;
       const className: string = line.className ? line.className : "";
       const texte: string = line.texte;
       const pokeCharH: HTMLSpanElement = new DocumentCreate({ className }).span(
