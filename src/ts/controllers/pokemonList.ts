@@ -76,6 +76,33 @@ export class ListPokemon {
     this.fetchPokemon.count = i;
   }
 
+  private async communFilter() {
+    const fetchPokemon = await new FetchPokemon(
+      `https://pokeapi.co/api/v2/pokemon/?offset=1&limit=${await this.number()}`
+    ).list();
+    const type: string = "normal";
+
+    const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
+    const offset = paginPage * this.limit;
+
+    this.fetchPokemon.results = [];
+    let i = 0;
+    for (const line of fetchPokemon.results) {
+      const typePokemom = await new FetchPokemon(line.url).info();
+      if (typePokemom.types && typePokemom.types[0].type.name.match(type)) {
+        i++;
+        this.fetchPokemon.results.push(line);
+      }
+    }
+
+    // Utilisation de la méthode slice pour extraire la sous-liste
+    this.fetchPokemon.results = this.fetchPokemon.results.slice(
+      this.currentPage * this.limit - this.limit,
+      this.currentPage * this.limit
+    );
+    this.fetchPokemon.count = i;
+  }
+
   private async number(): Promise<number> {
     this.fetchPokemon = await new FetchPokemon(
       `https://pokeapi.co/api/v2/pokemon/?offset=1&limit=1`
