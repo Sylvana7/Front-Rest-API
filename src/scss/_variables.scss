@@ -12,59 +12,63 @@ $font-poke-solid: "Pokemon-Solid", Avenir, Helvetica, Arial, sans-serif;
 $font-poke-hollow: "Pokemon-Hollow", Avenir, Helvetica, Arial, sans-serif;
 
 $breakpoints: (
-    pt-mobil-max: 399px,
-    mobil-max: 499px,
-    tablet-min: 500px,
-    tablet-max: 599px,
-    gd-tablet-min: 600px,
-    gd-tablet-max: 767px,
-    pt-screen-min: 768px,
-    pt-screen-max: 1049px,
-    gd-screen-min: 1050px,
-    very-gd-screen-min: 1205px
+  pt-mobil-max: 399px,
+  mobil-max: 499px,
+  tablet-min: 500px,
+  tablet-max: 599px,
+  gd-tablet-min: 600px,
+  gd-tablet-max: 767px,
+  pt-screen-min: 768px,
+  pt-screen-max: 1049px,
+  gd-screen-min: 1050px,
+  very-gd-screen-min: 1205px,
 );
 $orientation: (
-    paysage: landscape,
-    portrait: portrait
+  paysage: landscape,
+  portrait: portrait,
 );
 
 $text-shadow-values: ();
 /* contour */
 
 @for $i from 1 through 2 {
-    $text-shadow-values: append($text-shadow-values, 0 0 4px hsl(0, 100%, 18%), comma);
+  $text-shadow-values: append(
+    $text-shadow-values,
+    0 0 4px hsl(0, 100%, 18%),
+    comma
+  );
 }
 /* relief */
 @for $i from 1 through 7 {
-    $lightnessNum: 73 - ($i * 2);
-    $text-shadow-values: append(
-        $text-shadow-values,
-        #{$i * 0.5}px #{($i + 2) * 1}px 0 hsl($color_p, 26%, $lightnessNum * 1%),
-        comma
-    );
+  $lightnessNum: 73 - ($i * 2);
+  $text-shadow-values: append(
+    $text-shadow-values,
+    #{$i * 0.5}px #{($i + 2) * 1}px 0 hsl($color_p, 26%, $lightnessNum * 1%),
+    comma
+  );
 }
 
 /* ombre */
 @for $i from 1 through 4 {
-    $alphaNum: 0.5 - ($i * 0.1);
-    $text-shadow-values: append(
-        $text-shadow-values,
-        8px #{7 + ($i * 5)}px #{5 + ($i * 5)}px hsla(0, 0%, 0%, $alphaNum),
-        comma
-    );
+  $alphaNum: 0.5 - ($i * 0.1);
+  $text-shadow-values: append(
+    $text-shadow-values,
+    8px #{7 + ($i * 5)}px #{5 + ($i * 5)}px hsla(0, 0%, 0%, $alphaNum),
+    comma
+  );
 }
 
 @mixin typeColor($name, $color, $saturation) {
-    &.#{$name} {
-        background-image: linear-gradient(
-            180deg,
-            hsl($color, $saturation * 1%, 40%),
-            hsl($color, 77%, 70%),
-            hsl($color, $saturation * 1%, 30%)
-        );
-        border: 2px solid hsl($color, $saturation * 1%, 25%);
-        box-shadow: 3px 3px 2px hsl($color, $saturation * 1%, 20%);
-    }
+  &.#{$name} {
+    background-image: linear-gradient(
+      180deg,
+      hsl($color, $saturation * 1%, 40%),
+      hsl($color, 77%, 70%),
+      hsl($color, $saturation * 1%, 30%)
+    ) !important;
+    border: 2px solid hsl($color, $saturation * 1%, 25%) !important;
+    box-shadow: 3px 3px 2px hsl($color, $saturation * 1%, 20%) !important;
+  }
 }
 
 $saturationVibrant: 80 * 1%;
@@ -73,53 +77,50 @@ $saturationPastel: 100 * 1%;
 $lightnessPastel: 80 * 1%;
 
 @function pokeColor($color, $type: "pastel") {
-    $saturation: if($type == "pastel", pastel, $saturationVibrant);
-    $lightness: if($type == "pastel", pastel, $lightnessVibrant);
+  $saturation: if($type == "pastel", pastel, $saturationVibrant);
+  $lightness: if($type == "pastel", pastel, $lightnessVibrant);
 
-    @if $color == "Red" {
-        @return hsl(0, $saturation, $lightness);
-    } @else if $color == "Blue" {
-        @return hsl(240, $saturation, $lightness);
-    } @else if $color == "Yellow" {
-        @return hsl(60, $saturation, $lightness);
-    } @else if $color == "Green" {
-        @return hsl(120, $saturation, $lightness);
-    } @else if $color == "Black" {
-        @return hsl(0, 0, $lightness);
-    } @else if $color == "Brown" {
-        @return hsl(30, $saturation, 30);
-    } @else if $color == "Purple" {
-        @return hsl(270, $saturation, $lightness);
-    } @else if $color == "Gray" {
-        @return hsl(0, 0, $lightness);
-    } @else if $color == "White" {
-        @return hsl(0, 0, 100);
-    } @else if $color == "Pink" {
-        @return hsl(330, $saturation, 80);
-    }
+  @if $color == "Red" {
+    @return hsl(0, $saturation, $lightness);
+  } @else if $color == "Blue" {
+    @return hsl(240, $saturation, $lightness);
+  } @else if $color == "Yellow" {
+    @return hsl(60, $saturation, $lightness);
+  } @else if $color == "Green" {
+    @return hsl(120, $saturation, $lightness);
+  } @else if $color == "Black" {
+    @return hsl(0, 0, $lightness);
+  } @else if $color == "Brown" {
+    @return hsl(30, $saturation, 30);
+  } @else if $color == "Purple" {
+    @return hsl(270, $saturation, $lightness);
+  } @else if $color == "Gray" {
+    @return hsl(0, 0, $lightness);
+  } @else if $color == "White" {
+    @return hsl(0, 0, 100);
+  } @else if $color == "Pink" {
+    @return hsl(330, $saturation, 80);
+  }
 }
 
 $colors_pastel: (
-    "red": hsl(0, $saturationPastel, $lightnessPastel),
-    "blue": hsl(240, $saturationPastel, $lightnessPastel),
-    "yellow": hsl(60, $saturationPastel, $lightnessPastel),
-    "green": hsl(120, $saturationPastel, $lightnessPastel),
-    "black": hsl(0, 0%, 50%),
-    "brown": hsl(30, $saturationPastel, $lightnessPastel),
-    "purple": hsl(270, $saturationPastel, $lightnessPastel),
-    "gray": hsl(0, 0%, $saturationPastel),
-    "white": hsl(0, 0%, 90%),
-    "pink": hsl(330, $saturationPastel, $lightnessPastel)
+  "red": hsl(0, $saturationPastel, $lightnessPastel),
+  "blue": hsl(240, $saturationPastel, $lightnessPastel),
+  "yellow": hsl(60, $saturationPastel, $lightnessPastel),
+  "green": hsl(120, $saturationPastel, $lightnessPastel),
+  "black": hsl(0, 0%, 50%),
+  "brown": hsl(30, $saturationPastel, $lightnessPastel),
+  "purple": hsl(270, $saturationPastel, $lightnessPastel),
+  "gray": hsl(0, 0%, $saturationPastel),
+  "white": hsl(0, 0%, 90%),
+  "pink": hsl(330, $saturationPastel, $lightnessPastel),
 );
 
-$colors_vibrant:
-    "red" hsl(0, $saturationVibrant, $lightnessVibrant),
-    "blue" hsl(240, $saturationVibrant, $lightnessVibrant),
-    "yellow" hsl(60, $saturationVibrant, $lightnessVibrant),
-    "green" hsl(120, $saturationVibrant, $lightnessVibrant),
-    "black" hsl(0, 0%, 0%),
-    "brown" hsl(30, $saturationVibrant, 30%),
-    "purple" hsl(270, $saturationVibrant, $lightnessVibrant),
-    "gray" hsl(0, 0%, $lightnessVibrant),
-    "white" hsl(0, 0%, 100%),
-    "pink" hsl(330, $saturationVibrant, $lightnessVibrant);
+$colors_vibrant: "red" hsl(0, $saturationVibrant, $lightnessVibrant),
+  "blue" hsl(240, $saturationVibrant, $lightnessVibrant),
+  "yellow" hsl(60, $saturationVibrant, $lightnessVibrant),
+  "green" hsl(120, $saturationVibrant, $lightnessVibrant),
+  "black" hsl(0, 0%, 0%), "brown" hsl(30, $saturationVibrant, 30%),
+  "purple" hsl(270, $saturationVibrant, $lightnessVibrant),
+  "gray" hsl(0, 0%, $lightnessVibrant), "white" hsl(0, 0%, 100%),
+  "pink" hsl(330, $saturationVibrant, $lightnessVibrant);

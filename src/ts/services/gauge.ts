@@ -43,6 +43,7 @@ export class PokemonStatsGenerator {
       gaugeElement.appendChild(meterElement);
 
       const spanElement = document.createElement("span");
+      spanElement.classList.add("stat");
       spanElement.textContent = stat.name;
 
       liElement.appendChild(gaugeElement);

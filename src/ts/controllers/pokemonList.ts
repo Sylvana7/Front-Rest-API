@@ -167,7 +167,7 @@ export class ListPokemon {
       // Update the href attribute of the anchor element for Pokemon details
       const app_a: HTMLLinkElement | null = document.querySelector(`#__${i}`);
       if (app_a) {
-        app_a.href = `${hostname}/pokemon/${idPoke}`;
+        app_a.href = `${hostname}/pokemon/${idPoke}#identity`;
       }
 
       // Update the source attribute of the image element for Pokemon sprite
