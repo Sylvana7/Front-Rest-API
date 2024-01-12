@@ -1,11 +1,14 @@
 html {
   font-size: 18px;
 }
-$base-size: 3; // Taille de police de base pour h1
 
-@function calculate-font-size($level) {
-  @return $base-size * pow(1.5, $level - 1);
+@each $level in 1 through 6 {
+  h#{$level} {
+    font-size: calculate-font-size($level);
+    letter-spacing: calculate-letter-spacing($level);
+  }
 }
+
 body {
   color: $primary-color;
   background-color: $color_body;
@@ -61,6 +64,21 @@ header {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    margin-right: 10px;
+    a {
+      color: hsl(0, 0%, 100%);
+      padding: 5px;
+      border-radius: 5px;
+      .icon {
+        &::before {
+          margin-right: 5px;
+          color: hsl(14deg 100% 70.54%);
+        }
+      }
+      &:hover {
+        background-color: hsl(111deg 89.27% 39.6%);
+      }
+    }
   }
 }
 header,

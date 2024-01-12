@@ -39,26 +39,40 @@ if (UL) {
   UL.appendChild(LI);
 }
 
-const form: HTMLFormElement = new DocumentCreate({
+const formSearch: HTMLFormElement = new DocumentCreate({
   className: "pokemon__search",
 }).form({ method: "GET", action: `${hostname}/get/` });
 
-form.appendChild(
+formSearch.appendChild(
   new DocumentCreate().input({
+    type: "search",
     placeholder: "Search...",
     name: "form__search--pokemon",
     required: true,
   })
 );
 
-form.appendChild(
+formSearch.appendChild(
   new DocumentCreate().button({
     type: `submit`,
     texte: `<i class="fa fa-search"></i>`,
   })
 );
 
-divForm!.appendChild(form);
+divForm!.appendChild(formSearch);
+
+const formFilter: HTMLFormElement = new DocumentCreate({
+  className: "pokemon__filter",
+}).form({ method: "GET", action: `${hostname}/get/` });
+
+formFilter.appendChild(
+  new DocumentCreate().button({
+    type: `submit`,
+    texte: `<i class="fa fa-search"></i>`,
+  })
+);
+
+divForm!.appendChild(formFilter);
 
 let result: any = "";
 
