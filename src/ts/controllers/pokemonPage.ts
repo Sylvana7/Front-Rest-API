@@ -18,7 +18,7 @@ export class PokemonPage {
     }).div();
   };
 
-  constructor(public readonly number: number) {}
+  constructor(public readonly number: string) {}
 
   public async page(): Promise<HTMLDivElement> {
     let fetchPokemon: JSONpokemon = {};
@@ -83,10 +83,17 @@ export class PokemonPage {
       });
       contentDisplayR.appendChild(typeDisplay);
 
+<<<<<<< HEAD
       const statsDisplay: HTMLDivElement = this.createDiv(
         "characteristic stat"
       );
       statsDisplay.appendChild(this.title("Stats"));
+=======
+      htmlDisplay.appendChild(typeDisplay);
+
+      const statsDisplay: HTMLDivElement = createDiv("characteristic stat");
+      statsDisplay.appendChild(title("Stats"));
+>>>>>>> dba0f43b7e3c7ddb3182a25862e923fc57342b7d
 
       const statsData: PokemonStat[] = [];
 

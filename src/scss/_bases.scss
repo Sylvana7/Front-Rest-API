@@ -1,3 +1,11 @@
+html {
+  font-size: 18px;
+}
+$base-size: 3; // Taille de police de base pour h1
+
+@function calculate-font-size($level) {
+  @return $base-size * pow(1.5, $level - 1);
+}
 body {
   color: $primary-color;
   background-color: $color_body;
@@ -61,4 +69,8 @@ footer {
 }
 a {
   text-decoration: none;
+}
+ul,
+li {
+  list-style: none;
 }

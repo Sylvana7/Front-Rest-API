@@ -4,7 +4,7 @@ import { htmlHome } from "./html/pokemonInnerHtml";
 import { DisplayIcon } from "./icon";
 import "./scss/style.scss";
 import { FilterPokemon } from "./ts/services/filter";
-import { Routes, App } from "./ts/routes/routes";
+import { App } from "./ts/routes/routes";
 import { PokemonPage } from "./ts/controllers/pokemonPage";
 import { DocumentCreate } from "./ts/services/createElements";
 
@@ -18,6 +18,25 @@ if (!getCookie("limit")) {
 }
 if (!getCookie("display")) {
   setCookie("display", "block", { expires: 365, secure: secureCookie });
+}
+
+const logoElement = document.querySelector("#logo");
+if (logoElement) {
+  logoElement.innerHTML = `<a href="${hostname}"><img src="/src/img/poklogo.png"></a>`;
+}
+
+document.querySelector("nav")?.appendChild(new DocumentCreate().ul());
+const UL = document.querySelector("nav ul");
+if (UL) {
+  let link = new DocumentCreate().ahref({
+    url: hostname,
+  });
+  let ico = new DocumentCreate({ className: "icon icon_collection" }).span();
+  link.appendChild(ico);
+  link.innerHTML += "Home";
+  let LI = new DocumentCreate().li();
+  LI.appendChild(link);
+  UL.appendChild(LI);
 }
 
 const form: HTMLFormElement = new DocumentCreate({
@@ -56,7 +75,7 @@ switch (true) {
     break;
   }
   case App.routes("pokemon"): {
-    const pagin = new PokemonPage(Number(App.getValue("pokemon")));
+    const pagin = new PokemonPage(App.getValue("pokemon"));
     result = await pagin.page();
     break;
   }
@@ -99,8 +118,12 @@ if (App.routes("search")) {
   const name: string | null = App.getValue("search");
   if (name) {
     const pagin = new ListPokemon(name);
-    await pagin.loading();
+    pagin.loading();
   }
 } else if (App.routes("page") || App.routes("")) {
-  await new ListPokemon().loading();
+  new ListPokemon().loading();
+} else if (App.routes("pokemon")) {
+  setTimeout(() => {
+    document.querySelector(".stat")?.classList.add("active");
+  }, 1000);
 }

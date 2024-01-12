@@ -1,9 +1,9 @@
 import { Pagination } from "../services/paginations";
-import { App } from "../routes/routes";
+import { App, Routes } from "../routes/routes";
 import { hostname } from "../../main";
 
 export class PaginationPokemon {
-  private pagination: any;
+  private pagination?: HTMLDivElement;
   private currentPage: number;
 
   constructor(public readonly maxPokemon: number) {
@@ -15,11 +15,22 @@ export class PaginationPokemon {
       url: this.getUrl(),
       numberElements: this.maxPokemon,
       currentPage: this.currentPage,
-    });
-    return await this.pagination.getDisplay("pokemon__pagination");
+    }).getDisplay("pokemon__pagination");
+    return await this.pagination;
   }
 
   private getUrl(): string {
-    return `${hostname}/page/$num`;
+    let routes: boolean = App.routes("page");
+    let newRoute: string = "";
+
+    if (routes) {
+      newRoute = App.joinSegments(App.getReplace("page", "$num"));
+    } else {
+      let join: string = App.joinSegments(Routes.getRoutes());
+      newRoute = join ? join + "/" : "";
+      newRoute += "page/$num";
+    }
+    newRoute = newRoute.replaceAll("//", "/");
+    return hostname + "/" + newRoute;
   }
 }

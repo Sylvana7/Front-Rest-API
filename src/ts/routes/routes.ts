@@ -81,7 +81,7 @@ export class App {
     return segments
       .map(
         (segment) =>
-          `${segment.type}${segment.value ? "=" + segment.value : ""}`
+          `${segment.type}${segment.value ? "/" + segment.value : ""}`
       )
       .join("/");
   }

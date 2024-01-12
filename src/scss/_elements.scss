@@ -11,6 +11,7 @@
     text-align: center;
     letter-spacing: 2px;
   }
+
   .not_found {
     font-family: $font-poke-solid;
     letter-spacing: 2px;
@@ -23,9 +24,6 @@
     text-align: center;
   }
   .title {
-    // h1 {
-    //   font-size: 24px;
-    // }
     div {
       width: 100%;
       &:first-child {
@@ -51,9 +49,6 @@
     }
     .title {
       margin-bottom: 20px;
-      h1 {
-        font-size: 22px;
-      }
     }
 
     .loader {
@@ -117,7 +112,6 @@
   &__identity {
     .characteristic {
       h2 {
-        font-size: 25px;
         padding: 39px;
       }
       img {
@@ -127,7 +121,6 @@
         width: 100px;
       }
       span {
-        font-size: 15px;
         font-weight: bold;
       }
       .types {
@@ -282,7 +275,6 @@
           }
 
           h3 {
-            font-size: 16px;
             padding-top: 10px;
             text-shadow: 0px 0px 3px hsl(0, 0%, 100%);
             color: hsl($color_p, 91%, 9%);
@@ -332,151 +324,107 @@
     }
   }
   &__identity {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
+    .stat {
+      background-color: #a4a4a4;
+      border-radius: 10px;
 
-    &--img {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      img {
-        width: 85px;
+      float: left;
+      margin: 1em 0;
+      width: 100%;
+      // display: none;
+
+      &.active {
+        .gauge {
+          li {
+            &.meter {
+              // Define a variable for the number of steps
+              $steps: 100;
+
+              // Loop to generate styles for each step
+              @for $i from 0 through $steps {
+                $percentage: $i * 1%; // Calculate the percentage value
+
+                // Generate a class for each step with the corresponding top value
+                &.top_#{$i} {
+                  top: $percentage;
+                }
+              }
+            }
+          }
+        }
       }
-    }
+      h3 {
+        // font-family: "Flexo-Medium", arial, sans-serif;
+        clear: both;
+        color: #313131;
+        float: left;
+        font-size: 100%;
+        margin: 0.75em 1.5em 1.5em;
+        text-transform: none;
 
-    &--display {
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: space-around;
+        body.ru & {
+          font-family: "Roboto", arial, sans-serif;
+          font-weight: 500;
+        }
+      }
 
-      > div {
-        flex: 1;
-        margin: 0px;
-        margin-bottom: 70px;
+      > ul {
+        clear: both;
+        display: block;
+        margin-bottom: 1.5em;
+        position: relative;
+        width: 100%;
 
-        .characteristic {
-          h3 {
-            border: 1px solid black;
-            border-radius: 10px;
-            background-color: hsl(346, 30%, 92%);
-            color: black;
-            text-align: center;
-            padding: 10px;
-            width: 300px;
+        > li {
+          // float: left;
+          margin-right: -100%;
+          width: 12.95%;
+          display: inline-block;
+          margin: 0 1.5625% 1.25em 0;
+
+          &.first {
+            margin-left: 7.2525%;
           }
-          > div {
-            margin-bottom: 70px;
-            text-align: center;
-            span {
-              background-color: chocolate;
-              color: white;
-              display: inline-block;
 
-              margin-left: auto;
-              margin-right: auto;
-              width: 100px;
-              height: 100px;
-              padding: 2px;
-            }
-            // .characteristic {
-            //   &.ability {
-            //     span {
-            //     }
-            //   }
-            // }
-          }
-          &.stat {
-            background-color: #a4a4a4;
-            border-radius: 10px;
-            display: block;
+          span {
+            font-family: "Roboto", arial, sans-serif;
+            font-weight: bold;
+            color: #212121;
             float: left;
-            margin: 1em 0;
+            font-size: 62.5%;
+            text-align: center;
+            text-transform: none;
             width: 100%;
-            //  display: none;
-            &.active {
-              display: block;
+
+            @media (min-width: 1281px) and (max-width: 9999px) {
+              font-size: 75%;
             }
+          }
+        }
+      }
 
-            ul {
-              padding: 3px;
-              margin: -4px;
-            }
+      .gauge {
+        background: #fff;
+        position: relative;
+        overflow: hidden;
+        padding: 0;
 
-            h3 {
-              // font-family: "Flexo-Medium", arial, sans-serif;
-              clear: both;
-              color: #313131;
-              float: left;
-              font-size: 100%;
-              margin: 0.75em 1.5em 1.5em;
-              text-transform: none;
+        li {
+          background: transparent;
+          border-bottom: 0.25em solid #a4a4a4;
+          height: 0.5em;
+          width: 100%;
+          position: relative;
+          z-index: 2;
 
-              body.ru & {
-                font-family: "Roboto", arial, sans-serif;
-                font-weight: 500;
-              }
-            }
-
-            > ul {
-              clear: both;
-              display: block;
-              margin-bottom: 1.5em;
-              position: relative;
-              width: 100%;
-
-              > li {
-                //  float: left;
-                margin-right: -100%;
-                width: 12.95%;
-                display: inline-block;
-                margin: 0 1.5625% 1.25em 0;
-
-                &.first {
-                  margin-left: 7.2525%;
-                }
-
-                span {
-                  font-family: "Roboto", arial, sans-serif;
-                  font-weight: bold;
-                  color: #212121;
-                  float: left;
-                  font-size: 62.5%;
-                  text-align: center;
-                  text-transform: none;
-                  width: 100%;
-
-                  @media (min-width: 1281px) and (max-width: 9999px) {
-                    font-size: 75%;
-                  }
-                }
-              }
-            }
-
-            .gauge {
-              background: #fff;
-              position: relative;
-              overflow: hidden;
-              padding: 0;
-
-              li {
-                background: transparent;
-                border-bottom: 0.25em solid #a4a4a4;
-                height: 0.5em;
-                width: 100%;
-                position: relative;
-                z-index: 2;
-
-                &.meter {
-                  background: #30a7d7;
-                  border: none;
-                  height: 120%;
-                  position: absolute;
-                  top: 100%;
-                  z-index: 1;
-                }
-              }
-            }
+          &.meter {
+            background: #30a7d7;
+            border: none;
+            height: 120%;
+            position: absolute;
+            top: 100%;
+            z-index: 1;
+            transition: top 1.5s cubic-bezier(0.42, 0, 0.1, 2.6);
           }
         }
       }
