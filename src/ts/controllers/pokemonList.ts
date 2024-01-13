@@ -114,35 +114,36 @@ export class ListPokemon {
     const pathname: Segment[] = Routes.getRoutes();
     // console.log(pathname);
 
-    await pathname.forEach(async (line: Segment) => {
-      const routes: string = line.type;
-      const value: string = line.value;
-      if (routes != "filter" && value != "0") {
-        const position: number = arrayElem.indexOf(routes);
-        // console.log(position);
-        if (position !== -1) {
-          const choiceType: string = arrayRoutes[position];
-          const apiUrl = `https://pokeapi.co/api/v2/${routes}/${value}`;
-          const fetch: arrayDefault[] = await new FetchPokemon(apiUrl).type();
-          // console.log(apiUrl);
-          // Replace 'arrayDefault' with the actual type of the result
-          const result: string[] = fetch.map((obj) => obj.name);
+    await Promise.all(
+      pathname.map(async (line: Segment) => {
+        const routes: string = line.type;
+        const value: string = line.value;
 
-          // Now you can use 'result' as needed
-          console.log("fetch");
-          console.log(fetch);
-          arrayPoke.push(fetch);
-        } else {
-          console.error(`Type '${routes}' not found in arrayElem.`);
+        if (routes !== "filter" && value !== "0") {
+          const position: number = arrayElem.indexOf(routes);
+
+          if (position !== -1) {
+            const choiceType: string = arrayRoutes[position];
+            const apiUrl = `https://pokeapi.co/api/v2/${routes}/${value}`;
+            const fetch: arrayDefault[] = await new FetchPokemon(apiUrl).type();
+            const result: string[] = fetch.map((obj) => obj.name);
+
+            // console.log("fetch");
+            // console.log(fetch);
+            arrayPoke.push(fetch);
+          } else {
+            console.error(`Type '${routes}' not found in arrayElem.`);
+          }
         }
-      }
-    });
-    console.log("result");
+      })
+    );
+
+    // console.log("result");
     // console.log(arrayPoke);
     const arrayFilter: arrayDefault[] = this.getCommonElements(arrayPoke);
-    console.log(arrayFilter);
+    // console.log(arrayFilter);
     this.fetchPokemon.count = arrayFilter.length;
-    return arrayFilter;
+    this.fetchPokemon.results = arrayFilter;
   }
 
   private getCommonElements(arrays: arrayDefault[][]): arrayDefault[] {
@@ -177,7 +178,7 @@ export class ListPokemon {
     // Create a PaginationPokemon instance to handle pagination
     const pagination = new PaginationPokemon(this.fetchPokemon.count);
     const pokemon: arrayDefault[] = this.fetchPokemon.results;
-
+    console.log(pokemon);
     // Create HTML elements for displaying the Pokemon list and pagination
     const navigation: HTMLDivElement = await pagination.getPaginationPokemon();
     const htmlDisplay: HTMLDivElement = new DocumentCreate().div();
@@ -229,7 +230,7 @@ export class ListPokemon {
       const url = array.url;
       const infoPokemon: JSONpokemon = await new FetchPokemon(url).info();
       const idPoke: number = infoPokemon.id ? infoPokemon.id : 0;
-
+      this.loadingSpecies(idPoke, i);
       // Update the href attribute of the anchor element for Pokemon details
       const app_a: HTMLLinkElement | null = document.querySelector(`#__${i}`);
       if (app_a) {
@@ -269,26 +270,25 @@ export class ListPokemon {
         app_span.innerHTML = idPokemon;
       }
     }
-    this.loadingSpecies(id);
   }
 
-  public async loadingSpecies(id: number[]): Promise<void> {
+  public async loadingSpecies(id: number, i: number): Promise<void> {
     const urlSpecies = `https://pokeapi.co/api/v2/pokemon-species/`;
 
-    for (let i = 0; i < id.length; i++) {
-      const speciesPokemon: JSONspecies = await new FetchPokemon(
-        urlSpecies + id[i]
-      ).infoSpecies();
-      const app_color: HTMLSpanElement | null = document.querySelector(
-        `#__${i + 1} div`
-      );
+    // for (let i = 0; i < id.length; i++) {
+    const speciesPokemon: JSONspecies = await new FetchPokemon(
+      urlSpecies + id
+    ).infoSpecies();
+    const app_color: HTMLSpanElement | null = document.querySelector(
+      `#__${i} div`
+    );
 
-      if (app_color) {
-        const color: string = speciesPokemon.color
-          ? speciesPokemon.color.name
-          : "";
-        if (color) app_color.classList.add(color);
-      }
+    if (app_color) {
+      const color: string = speciesPokemon.color
+        ? speciesPokemon.color.name
+        : "";
+      if (color) app_color.classList.add(color);
     }
   }
+  // }
 }

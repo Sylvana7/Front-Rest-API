@@ -47,7 +47,7 @@ switch (true) {
 
   case App.routes("filter"): {
     const pagin = new ListPokemon({ filter: true });
-    result = pagin.getListPokemon();
+    result = await pagin.getListPokemon();
     break;
   }
   case App.routes("pokemon"): {
@@ -83,7 +83,7 @@ switch (true) {
     break;
   }
 }
-
+console.log(result);
 app!.innerHTML = "";
 if (result && result.innerHTML) {
   app!.appendChild(result);
@@ -97,6 +97,8 @@ if (App.routes("search")) {
     const pagin = new ListPokemon({ post: name });
     pagin.loading();
   }
+} else if (App.routes("filter")) {
+  new ListPokemon({ filter: true }).loading();
 } else if (App.routes("page") || App.routes("")) {
   new ListPokemon().loading();
 } else if (App.routes("pokemon")) {

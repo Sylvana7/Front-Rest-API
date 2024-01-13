@@ -1,5 +1,6 @@
 // import { Types } from "typescript-cookie";
 import { hostname } from "../../main";
+import { App } from "../routes/routes";
 import { DocumentCreate } from "../services/createElements";
 import { FetchPokemon, JSONObject, arrayDefault } from "../services/fetch";
 // import { JSONObject, ability, type } from "../services/fetch";
@@ -42,6 +43,7 @@ export class GenerateHtml {
         placeholder: "Search...",
         name: "form__search--pokemon",
         required: true,
+        value: App.getValue("search"),
       })
     );
 
@@ -73,6 +75,7 @@ export class GenerateHtml {
         const optionElement = document.createElement("option");
         optionElement.value = optionText.name;
         optionElement.text = optionText.name;
+        optionElement.selected = optionText.name === App.getValue(arrayText);
         selectElement.appendChild(optionElement);
       });
       formFilter?.appendChild(selectElement);
