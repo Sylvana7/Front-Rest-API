@@ -1,5 +1,5 @@
 // Represents a segment with a type and value.
-interface Segment {
+export interface Segment {
   type: string;
   value: string;
 }
@@ -64,7 +64,7 @@ export class App {
     const routes = Routes.getRoutes();
 
     // Find the index of the segment that corresponds to routeClient.
-    const index = routes.findIndex(
+    const index: number = routes.findIndex(
       (segment) => segment.type === routeClient || segment.value === routeClient
     );
 
@@ -86,8 +86,8 @@ export class App {
       .join("/");
   }
 
-  public transformUrlToString(): string {
-    const urlObj = new URL(window.location.pathname);
+  public static transformUrlToString(): string {
+    const urlObj = new URL(window.location.href);
     const params = new URLSearchParams(urlObj.search);
 
     // Obtenir les paramètres de requête sous forme de tableau de paires clé-valeur

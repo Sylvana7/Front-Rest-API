@@ -5,8 +5,9 @@ import {
   JSONpokemon,
   JSONspecies,
   arrayDefault,
+  JSONType,
 } from "../services/fetch";
-import { App } from "../routes/routes";
+import { App, Routes, Segment } from "../routes/routes";
 import { getCookie } from "typescript-cookie";
 import { hostname } from "../../main";
 import { PaginationPokemon } from "./pokemonPagination";
@@ -17,18 +18,35 @@ import { DocumentCreate } from "../services/createElements";
 export class ListPokemon {
   // Private member variables for storing fetched Pokemon data and current page number
   private fetchPokemon: JSONObject = { count: 0, results: [] };
-  private currentPage: number;
+
   // Retrieve the limit value from the cookie
   private limit: number = Number(getCookie("limit"));
 
+  public readonly post: string;
+  public readonly filter: boolean;
+  public readonly currentPage: number;
+
   // Constructor for initializing the class instance
-  constructor(public readonly post: string = "") {
+  constructor(public readonly form?: { post?: string } | { filter?: boolean }) {
+    const { post = "", filter = false } =
+      (form as {
+        post?: string;
+        filter?: boolean;
+      }) || {};
+    this.post = post;
+    this.filter = filter;
+    console.log("post  : ");
+    console.log(this.post);
+    console.log("filter");
+    console.log(this.filter);
     // Get the current page number from the Routes class
     this.currentPage =
       Number(App.getValue("page")) <= 0 ? 1 : Number(App.getValue("page"));
   }
 
   private async communList(): Promise<void> {
+    console.log("list");
+
     // Calculate the offset based on the current page and limit
     const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
     const offset = paginPage * this.limit;
@@ -41,8 +59,11 @@ export class ListPokemon {
   }
 
   private async communSearch() {
+    console.log("search");
     const fetchPokemon = await new FetchPokemon(
-      `https://pokeapi.co/api/v2/pokemon/?offset=1&limit=${await this.number()}`
+      `https://pokeapi.co/api/v2/pokemon/?offset=1&limit=${await this.number(
+        "pokemon"
+      )}`
     ).list();
     let regexPost: string = this.post;
 
@@ -77,43 +98,82 @@ export class ListPokemon {
   }
 
   private async communFilter() {
-    const fetchPokemon = await new FetchPokemon(
-      `https://pokeapi.co/api/v2/pokemon/?offset=1&limit=${await this.number()}`
+    console.log("filter");
+    const fetchPokemon: JSONObject = await new FetchPokemon(
+      `https://pokeapi.co/api/v2/pokemon/?offset=1&limit=${await this.number(
+        "pokemon"
+      )}`
     ).list();
-    const type: string = "normal";
-
+    const arrayPoke: arrayDefault[][] = [];
+    // const namePokemon: string[] = fetchPokemon.results.map((obj) => obj.name);
+    arrayPoke.push(fetchPokemon.results);
+    const arrayElem: string[] = ["pokemon-color", "type", "ability"];
+    const arrayRoutes: string[] = ["pokemon-species", "pokemon", "pokemon"];
     // const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
     // const offset = paginPage * this.limit;
+    const pathname: Segment[] = Routes.getRoutes();
+    // console.log(pathname);
 
-    this.fetchPokemon.results = [];
-    let i = 0;
-    for (const line of fetchPokemon.results) {
-      const typePokemom = await new FetchPokemon(line.url).info();
-      if (typePokemom.types && typePokemom.types[0].type.name.match(type)) {
-        i++;
-        this.fetchPokemon.results.push(line);
+    await pathname.forEach(async (line: Segment) => {
+      const routes: string = line.type;
+      const value: string = line.value;
+      if (routes != "filter" && value != "0") {
+        const position: number = arrayElem.indexOf(routes);
+        // console.log(position);
+        if (position !== -1) {
+          const choiceType: string = arrayRoutes[position];
+          const apiUrl = `https://pokeapi.co/api/v2/${routes}/${value}`;
+          const fetch: arrayDefault[] = await new FetchPokemon(apiUrl).type();
+          // console.log(apiUrl);
+          // Replace 'arrayDefault' with the actual type of the result
+          const result: string[] = fetch.map((obj) => obj.name);
+
+          // Now you can use 'result' as needed
+          console.log("fetch");
+          console.log(fetch);
+          arrayPoke.push(fetch);
+        } else {
+          console.error(`Type '${routes}' not found in arrayElem.`);
+        }
       }
-    }
-
-    // Utilisation de la méthode slice pour extraire la sous-liste
-    this.fetchPokemon.results = this.fetchPokemon.results.slice(
-      this.currentPage * this.limit - this.limit,
-      this.currentPage * this.limit
-    );
-    this.fetchPokemon.count = i;
+    });
+    console.log("result");
+    // console.log(arrayPoke);
+    const arrayFilter: arrayDefault[] = this.getCommonElements(arrayPoke);
+    console.log(arrayFilter);
+    this.fetchPokemon.count = arrayFilter.length;
+    return arrayFilter;
   }
 
-  private async number(): Promise<number> {
+  private getCommonElements(arrays: arrayDefault[][]): arrayDefault[] {
+    if (arrays.length === 0) {
+      return [];
+    }
+
+    // Utiliser le premier tableau comme base
+    const commonElements = arrays[0].filter((element) =>
+      arrays.every((array) => array.some((obj) => obj.name === element.name))
+    );
+
+    return commonElements;
+  }
+
+  private async number(element: string): Promise<number> {
     this.fetchPokemon = await new FetchPokemon(
-      `https://pokeapi.co/api/v2/pokemon/?offset=1&limit=1`
+      `https://pokeapi.co/api/v2/${element}/?offset=1&limit=1`
     ).list();
     return Number(this.fetchPokemon.count);
   }
 
   // Asynchronous method to fetch and display the list of Pokemon
   public async getListPokemon(): Promise<InnerHTML> {
-    this.post ? await this.communSearch() : await this.communList();
-
+    if (this.post != "") {
+      await this.communSearch();
+    } else if (this.filter) {
+      await this.communFilter();
+    } else {
+      await this.communList();
+    }
     // Create a PaginationPokemon instance to handle pagination
     const pagination = new PaginationPokemon(this.fetchPokemon.count);
     const pokemon: arrayDefault[] = this.fetchPokemon.results;
@@ -152,7 +212,13 @@ export class ListPokemon {
 
   // Asynchronous method for loading additional information for each Pokemon
   public async loading(): Promise<void> {
-    this.post ? await this.communSearch() : await this.communList();
+    if (this.post != "") {
+      await this.communSearch();
+    } else if (this.filter) {
+      await this.communFilter();
+    } else {
+      await this.communList();
+    }
     const pokemon: arrayDefault[] = this.fetchPokemon.results;
 
     // Iterate over the fetched Pokemon to load additional information
