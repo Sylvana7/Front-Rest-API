@@ -9,7 +9,7 @@ import {
 } from "../services/fetch";
 import { App, Routes, Segment } from "../routes/routes";
 import { getCookie } from "typescript-cookie";
-import { hostname } from "../../main";
+import { arrayElemFilter, hostname } from "../../main";
 import { PaginationPokemon } from "./pokemonPagination";
 import { displayPokemon } from "../services/pokemonsDisplay";
 import { DocumentCreate } from "../services/createElements";
@@ -107,8 +107,7 @@ export class ListPokemon {
     const arrayPoke: arrayDefault[][] = [];
     // const namePokemon: string[] = fetchPokemon.results.map((obj) => obj.name);
     arrayPoke.push(fetchPokemon.results);
-    const arrayElem: string[] = ["pokemon-color", "type", "ability"];
-    const arrayRoutes: string[] = ["pokemon-species", "pokemon", "pokemon"];
+    // const arrayRoutes: string[] = ["pokemon-species", "pokemon", "pokemon"];
     // const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
     // const offset = paginPage * this.limit;
     const pathname: Segment[] = Routes.getRoutes();
@@ -120,13 +119,13 @@ export class ListPokemon {
         const value: string = line.value;
 
         if (routes !== "filter" && value !== "0") {
-          const position: number = arrayElem.indexOf(routes);
+          const position: number = arrayElemFilter.indexOf(routes);
 
           if (position !== -1) {
-            const choiceType: string = arrayRoutes[position];
+            // const choiceType: string = arrayRoutes[position];
             const apiUrl = `https://pokeapi.co/api/v2/${routes}/${value}`;
             const fetch: arrayDefault[] = await new FetchPokemon(apiUrl).type();
-            const result: string[] = fetch.map((obj) => obj.name);
+            // const result: string[] = fetch.map((obj) => obj.name);
 
             // console.log("fetch");
             // console.log(fetch);

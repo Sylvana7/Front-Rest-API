@@ -34,10 +34,7 @@
       }
       &:last-child {
         position: relative;
-        background: linear-gradient(
-          hsl($color_p, 74%, 70%) 20%,
-          hsl(0, 77%, 45%) 90%
-        );
+        background: linear-gradient(hsl($color_p, 74%, 70%) 20%, hsl(0, 77%, 45%) 90%);
         background-clip: text;
         color: transparent;
       }
@@ -74,8 +71,7 @@
         bottom: 0;
         margin: auto;
         border: 3px solid;
-        border-color: transparent transparent hsl(111, 100%, 50%)
-          hsl(111, 100%, 50%);
+        border-color: transparent transparent hsl(111, 100%, 50%) hsl(111, 100%, 50%);
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -257,7 +253,8 @@
           position: relative;
           border: 2px solid hsl(0, 97%, 23%);
           border-radius: 20px;
-          box-shadow: 2px 2px 4px hsl(60, 11%, 38%),
+          box-shadow:
+            2px 2px 4px hsl(60, 11%, 38%),
             inset 2px 2px 4px hsl(0, 0%, 30%);
           background-color: hsl($color_bk, 13%, 81%);
           width: 157px;
@@ -319,10 +316,35 @@
     background-color: hsl($color_p, 100%, 10%);
     padding: 6px;
     input,
+    select,
+    button {
+      margin-left: 5px;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+    input,
     button {
       font-size: 18px;
     }
+    option {
+      &.lablelOption {
+        color: #363636;
+      }
+      @each $color, $value in $colors_vibrant {
+        &.#{$color} {
+          background-color: map-get($colors_pastel, $color);
+          // color: $value;
+          color: #000;
+          &:hover {
+            background-color: $value;
+            // color: $value;
+            color: #fff;
+          }
+        }
+      }
+    }
   }
+
   &__filter {
     display: flex;
     flex-direction: row-reverse;
@@ -339,7 +361,8 @@
       div {
         padding: 15px 75px;
         border-radius: 25px;
-        box-shadow: 3px 3px 2px hsl(0deg 0% 25.34%),
+        box-shadow:
+          3px 3px 2px hsl(0deg 0% 25.34%),
           -2px -2px 0px hsl(0deg 0% 25.34%);
         img {
           width: 85px;
@@ -365,7 +388,8 @@
       }
       .characteristic {
         margin-bottom: 30px;
-        box-shadow: 3px 3px 2px hsl(0deg 0% 25.34%),
+        box-shadow:
+          3px 3px 2px hsl(0deg 0% 25.34%),
           -2px -2px 0px hsl(0deg 0% 25.34%);
         h3 {
           border-radius: 10px 10px 0 0;
@@ -394,24 +418,14 @@
             margin-right: auto;
             padding: 5px 10px;
             text-shadow: 2px 2px 2px hsl(0, 0%, 9%);
-            background-image: linear-gradient(
-              180deg,
-              hsl(100, 52%, 40%),
-              hsl(100, 77%, 70%),
-              hsl(100, 52%, 30%)
-            );
+            background-image: linear-gradient(180deg, hsl(100, 52%, 40%), hsl(100, 77%, 70%), hsl(100, 52%, 30%));
             box-shadow: 3px 3px 2px hsl(222, 82%, 20%);
             @each $color, $value in $colors_vibrant {
               &.#{$color} {
                 // background-color: $value;
                 border: 1px solid $value;
                 background-color: map-get($colors_pastel, $color);
-                background-image: linear-gradient(
-                  180deg,
-                  $value,
-                  map-get($colors_pastel, $color),
-                  $value
-                );
+                background-image: linear-gradient(180deg, $value, map-get($colors_pastel, $color), $value);
               }
             }
             border: 2px solid hsl(100, 52%, 25%);

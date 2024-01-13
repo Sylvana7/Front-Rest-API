@@ -19,6 +19,12 @@ if (!getCookie("limit")) {
 if (!getCookie("display")) {
   setCookie("display", "block", { expires: 365, secure: secureCookie });
 }
+export const arrayElemFilter: string[] = [
+  "pokemon-habitat",
+  "pokemon-color",
+  "type",
+  "ability",
+];
 
 new GenerateHtml().logo();
 new GenerateHtml().nav();
