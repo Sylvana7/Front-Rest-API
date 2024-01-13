@@ -53,6 +53,15 @@ export interface JSONspecies {
   capture_rate?: number;
 }
 
+export interface JSONType {
+  pokemon?: TypePoke[];
+  pokemon_species?: arrayDefault[];
+}
+interface TypePoke {
+  pokemon: arrayDefault;
+  slot: number;
+}
+
 export class FetchPokemon {
   constructor(public readonly url: string) {}
 
@@ -80,5 +89,21 @@ export class FetchPokemon {
     }
     const pokemon = (await container.json()) as JSONObject;
     return Promise.resolve(pokemon);
+  }
+
+  public async type(): Promise<arrayDefault[]> {
+    const container: Response = await fetch(this.url);
+    if (container.status === 404) {
+      return [];
+    }
+    const pokemonFetch = (await container.json()) as JSONType;
+    if (pokemonFetch.pokemon) {
+      const arrayDefaults: arrayDefault[] = pokemonFetch.pokemon.map(
+        (typePoke: TypePoke) => typePoke.pokemon
+      );
+      return Promise.resolve(arrayDefaults);
+    }
+    if (pokemonFetch.pokemon_species) return pokemonFetch.pokemon_species;
+    return [];
   }
 }

@@ -27,6 +27,11 @@ new GenerateHtml().filter();
 
 let result: any = "";
 
+console.log(window.location.pathname);
+console.log(window.location.origin);
+console.log(window.location.hash);
+console.log(window.location.href);
+
 switch (true) {
   case App.routes("icon"): {
     const classe = new DisplayIcon();
@@ -34,9 +39,15 @@ switch (true) {
     break;
   }
 
+  case App.routes("getFilter"): {
+    const name: string | null = App.transformUrlToString() || "";
+    window.location.href = hostname + "/filter/true/" + name;
+    break;
+  }
+
   case App.routes("filter"): {
-    const pagin = new FilterPokemon();
-    result = pagin.filterPokemon();
+    const pagin = new ListPokemon({ filter: true });
+    result = pagin.getListPokemon();
     break;
   }
   case App.routes("pokemon"): {
@@ -48,6 +59,7 @@ switch (true) {
     const url = new URL(window.location.href);
     const name: string | null =
       url.searchParams.get("form__search--pokemon") || "";
+
     window.location.href = hostname + "/search/" + name;
 
     break;
@@ -55,7 +67,7 @@ switch (true) {
   case App.routes("search"): {
     const name: string = App.getValue("search");
     if (name) {
-      const pagin = new ListPokemon(name);
+      const pagin = new ListPokemon({ post: name });
       result = await pagin.getListPokemon();
     }
     break;
@@ -82,7 +94,7 @@ if (result && result.innerHTML) {
 if (App.routes("search")) {
   const name: string | null = App.getValue("search");
   if (name) {
-    const pagin = new ListPokemon(name);
+    const pagin = new ListPokemon({ post: name });
     pagin.loading();
   }
 } else if (App.routes("page") || App.routes("")) {

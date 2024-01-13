@@ -1,7 +1,7 @@
 // import { Types } from "typescript-cookie";
 import { hostname } from "../../main";
 import { DocumentCreate } from "../services/createElements";
-import { FetchPokemon, JSONObject } from "../services/fetch";
+import { FetchPokemon, JSONObject, arrayDefault } from "../services/fetch";
 // import { JSONObject, ability, type } from "../services/fetch";
 // import { types } from "util";
 
@@ -15,10 +15,8 @@ export class GenerateHtml {
   public nav() {
     document.querySelector("nav")?.appendChild(new DocumentCreate().ul());
     const UL = document.querySelector("nav ul");
-    console.log("nav");
 
     if (UL) {
-      console.log("UL");
       let link = new DocumentCreate().ahref({
         url: hostname,
       });
@@ -64,17 +62,14 @@ export class GenerateHtml {
     const arrayOfOptions = ["pokemon-color", "ability", "type"];
     arrayOfOptions.forEach(async (arrayText) => {
       const selectElement = document.createElement("select");
-      selectElement.setAttribute(
-        "name",
-        arrayText.replace("pokemon-color", "color")
-      );
-      const url = `https://pokeapi.co/api/v2/${arrayText}`;
+      selectElement.setAttribute("name", arrayText);
+      const url = `https://pokeapi.co/api/v2/${arrayText}?limit=200000`;
       const fetch: JSONObject = await new FetchPokemon(url).list();
       const optionElement = document.createElement("option");
       optionElement.value = "0";
       optionElement.text = `--${arrayText.replace("pokemon-color", "color")}--`;
       selectElement.appendChild(optionElement);
-      fetch.results.forEach(async (optionText) => {
+      await fetch.results.forEach(async (optionText: arrayDefault) => {
         const optionElement = document.createElement("option");
         optionElement.value = optionText.name;
         optionElement.text = optionText.name;
