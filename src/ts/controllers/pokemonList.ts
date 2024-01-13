@@ -142,7 +142,11 @@ export class ListPokemon {
     const arrayFilter: arrayDefault[] = this.getCommonElements(arrayPoke);
     // console.log(arrayFilter);
     this.fetchPokemon.count = arrayFilter.length;
-    this.fetchPokemon.results = arrayFilter;
+
+    this.fetchPokemon.results = arrayFilter.slice(
+      this.currentPage * this.limit - this.limit,
+      this.currentPage * this.limit
+    );
   }
 
   private getCommonElements(arrays: arrayDefault[][]): arrayDefault[] {
