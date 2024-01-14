@@ -1,0 +1,5 @@
+[alias]
+    acp = !sh -c 'git add . && git commit -m "$1" && git push origin $(git symbolic-ref --short HEAD)'
+    cacp = !sh -c 'git checkout -b "$1" && git add . && git commit -m "$1" && git push origin $(git symbolic-ref --short HEAD)'
+    c = !sh -c 'git checkout -b "$1"'
+
