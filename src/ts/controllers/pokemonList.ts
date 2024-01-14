@@ -5,7 +5,6 @@ import {
   JSONpokemon,
   JSONspecies,
   arrayDefault,
-  JSONType,
 } from "../services/fetch";
 import { App, Routes, Segment } from "../routes/routes";
 import { getCookie } from "typescript-cookie";
@@ -111,7 +110,6 @@ export class ListPokemon {
     // const paginPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
     // const offset = paginPage * this.limit;
     const pathname: Segment[] = Routes.getRoutes();
-    // console.log(pathname);
 
     await Promise.all(
       pathname.map(async (line: Segment) => {
@@ -122,13 +120,8 @@ export class ListPokemon {
           const position: number = arrayElemFilter.indexOf(routes);
 
           if (position !== -1) {
-            // const choiceType: string = arrayRoutes[position];
             const apiUrl = `https://pokeapi.co/api/v2/${routes}/${value}`;
             const fetch: arrayDefault[] = await new FetchPokemon(apiUrl).type();
-            // const result: string[] = fetch.map((obj) => obj.name);
-
-            // console.log("fetch");
-            // console.log(fetch);
             arrayPoke.push(fetch);
           } else {
             console.error(`Type '${routes}' not found in arrayElem.`);
@@ -137,10 +130,7 @@ export class ListPokemon {
       })
     );
 
-    // console.log("result");
-    // console.log(arrayPoke);
     const arrayFilter: arrayDefault[] = this.getCommonElements(arrayPoke);
-    // console.log(arrayFilter);
     this.fetchPokemon.count = arrayFilter.length;
 
     this.fetchPokemon.results = arrayFilter.slice(
@@ -181,7 +171,7 @@ export class ListPokemon {
     // Create a PaginationPokemon instance to handle pagination
     const pagination = new PaginationPokemon(this.fetchPokemon.count);
     const pokemon: arrayDefault[] = this.fetchPokemon.results;
-    console.log(pokemon);
+
     // Create HTML elements for displaying the Pokemon list and pagination
     const navigation: HTMLDivElement = await pagination.getPaginationPokemon();
     const htmlDisplay: HTMLDivElement = new DocumentCreate().div();
@@ -277,8 +267,6 @@ export class ListPokemon {
 
   public async loadingSpecies(id: number, i: number): Promise<void> {
     const urlSpecies = `https://pokeapi.co/api/v2/pokemon-species/`;
-
-    // for (let i = 0; i < id.length; i++) {
     const speciesPokemon: JSONspecies = await new FetchPokemon(
       urlSpecies + id
     ).infoSpecies();
@@ -293,5 +281,4 @@ export class ListPokemon {
       if (color) app_color.classList.add(color);
     }
   }
-  // }
 }

@@ -33,16 +33,8 @@ new GenerateHtml().filter();
 
 let result: any = "";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const navOptions = document.getElementById("nav__options");
-  const formSearch = document.getElementById("sformSearch");
-
-  // if (navOptions && formSearch) {
-  // }
-});
-
 switch (true) {
-  case App.routes("icon"): {
+  case App.routes("icons"): {
     const classe = new DisplayIcon();
     result = classe.displayIcon();
     break;
@@ -92,7 +84,7 @@ switch (true) {
     break;
   }
 }
-console.log(result);
+
 app!.innerHTML = "";
 if (result && result.innerHTML) {
   app!.appendChild(result);
@@ -117,9 +109,7 @@ if (App.routes("search")) {
 }
 
 const navOptionsA = document.querySelector("#nav__options a");
-console.log(navOptionsA ? "exist" : "no exist");
-navOptionsA?.addEventListener("click", () => {
-  console.log("addEvent");
 
+navOptionsA?.addEventListener("click", () => {
   toggleActive();
 });

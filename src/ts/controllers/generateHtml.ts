@@ -1,10 +1,7 @@
-// import { Types } from "typescript-cookie";
 import { arrayElemFilter, hostname } from "../../main";
 import { App } from "../routes/routes";
 import { DocumentCreate } from "../services/createElements";
-import { FetchPokemon, JSONObject, arrayDefault } from "../services/fetch";
-// import { JSONObject, ability, type } from "../services/fetch";
-// import { types } from "util";
+import { FetchPokemon } from "../services/fetch";
 
 export class GenerateHtml {
   public logo() {
