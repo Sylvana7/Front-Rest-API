@@ -4,8 +4,12 @@ html {
 
 @each $level in 1 through 6 {
   h#{$level} {
-    font-size: calculate-font-size($level);
-    letter-spacing: calculate-letter-spacing($level);
+    font-size: calculate-font-size-mobil($level);
+    letter-spacing: calculate-letter-spacing-mobil($level);
+    @include gd-screen-min {
+      font-size: calculate-font-size($level);
+      letter-spacing: calculate-letter-spacing($level);
+    }
   }
 }
 
@@ -59,13 +63,21 @@ header {
       width: 20vw;
     }
   }
-  nav {
+  .nav {
     width: 48vw;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     margin-right: 10px;
+    ul {
+      width: 115px;
+    }
+    li {
+      margin: 0 5px 5px 5px;
+      width: 100%;
+    }
     a {
+      display: block;
       color: hsl(0, 0%, 100%);
       padding: 5px;
       border-radius: 5px;
@@ -77,6 +89,17 @@ header {
       }
       &:hover {
         background-color: hsl(111deg 89.27% 39.6%);
+      }
+    }
+    &__options {
+      &.actived {
+        a {
+          box-shadow: inset 2px 1px 3px hsl(0, 0%, 27%);
+          background-color: hsl(111deg 89.27% 39.6%);
+        }
+      }
+      @include gd-screen-min {
+        display: none;
       }
     }
   }

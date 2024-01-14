@@ -67,4 +67,3 @@ export class PokemonStatsGenerator {
 
 // const generator = new PokemonStatsGenerator(statsData);
 // const generatedHTML = generator.generateHTML();
-// console.log(generatedHTML);

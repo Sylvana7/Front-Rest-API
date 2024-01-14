@@ -27,20 +27,20 @@ export class Pagination {
     const {
       url = `${hostname}/page/$num`,
       numberElements = 0,
-      currentPage = 0,
+      currentPage = 1,
       numberPermanent = 3,
       numberMiddle = 2,
     } = options;
     this.url = url;
     this.numberElements = numberElements;
-    this.currentPage = currentPage;
+    this.currentPage = currentPage > 0 ? currentPage : 1;
     this.numberPermanent = numberPermanent;
     this.numberMiddle = numberMiddle * 2;
   }
 
   // Get the next page number
   public getNextPage(): number {
-    return this.currentPage > 1 ? this.currentPage + 1 : 1;
+    return this.currentPage >= 1 ? this.currentPage + 1 : 2;
   }
 
   // Get the previous page number
