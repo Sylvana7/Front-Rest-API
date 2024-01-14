@@ -309,36 +309,83 @@
       }
     }
   }
+  &__form {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: -99;
+    width: 100%;
+    @include gd-screen-min {
+      position: relative;
+      opacity: 1;
+      z-index: 99;
+    }
+    &.actived {
+      opacity: 1;
+      z-index: 99;
+    }
+    &__search,
+    &__filter {
+      text-align: right;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      background-color: hsl(0deg 0% 30.07% / 84%);
+      box-shadow: 5px 5px 3px #000;
 
-  &__search,
-  &__filter {
-    text-align: right;
-    background-color: hsl($color_p, 100%, 10%);
-    padding: 6px;
-    input,
-    select,
-    button {
-      margin-left: 5px;
-      border-radius: 5px;
-      font-size: 15px;
-    }
-    input,
-    button {
-      font-size: 18px;
-    }
-    option {
-      &.lablelOption {
-        color: #363636;
+      @include gd-screen-min {
+        background-color: hsl($color_p, 100%, 10%);
+        box-shadow: none;
+        display: block;
       }
-      @each $color, $value in $colors_vibrant {
-        &.#{$color} {
-          background-color: map-get($colors_pastel, $color);
-          // color: $value;
-          color: #000;
-          &:hover {
-            background-color: $value;
+      input,
+      select {
+        width: 100%;
+        @include gd-screen-min {
+          width: auto;
+        }
+      }
+      input,
+      select,
+      button {
+        margin: 0 0 5px 5px;
+        border-radius: 5px;
+        font-size: 15px;
+      }
+      button {
+        width: 30px;
+        height: 30px;
+        box-shadow: 1px 1px 3px #797979;
+        cursor: pointer;
+        &:hover {
+          background-color: hsl($color_p, 100%, 32%);
+        }
+      }
+      select {
+        padding: 3px;
+        cursor: pointer;
+      }
+      input,
+      button {
+        font-size: 18px;
+      }
+      option {
+        cursor: pointer;
+        &.lablelOption {
+          color: #363636;
+        }
+        @each $color, $value in $colors_vibrant {
+          &.#{$color} {
+            background-color: map-get($colors_pastel, $color);
             // color: $value;
-            color: #fff;
+            color: #000;
+            &:hover {
+              background-color: $value;
+              // color: $value;
+              color: #fff;
+            }
           }
         }
       }

@@ -2,11 +2,11 @@ import { getCookie, setCookie } from "typescript-cookie";
 import { ListPokemon } from "./ts/controllers/pokemonList";
 import { htmlHome } from "./html/pokemonInnerHtml";
 import { DisplayIcon } from "./icon";
-import "./scss/style.scss";
-import { FilterPokemon } from "./ts/services/filter";
 import { App } from "./ts/routes/routes";
 import { PokemonPage } from "./ts/controllers/pokemonPage";
 import { GenerateHtml } from "./ts/controllers/generateHtml";
+import { toggleActive } from "./ts/services/functions";
+import "./scss/style.scss";
 
 export const hostname: string = window.location.origin;
 export const secureCookie: boolean = false;
@@ -33,10 +33,13 @@ new GenerateHtml().filter();
 
 let result: any = "";
 
-console.log(window.location.pathname);
-console.log(window.location.origin);
-console.log(window.location.hash);
-console.log(window.location.href);
+document.addEventListener("DOMContentLoaded", () => {
+  const navOptions = document.getElementById("nav__options");
+  const formSearch = document.getElementById("sformSearch");
+
+  // if (navOptions && formSearch) {
+  // }
+});
 
 switch (true) {
   case App.routes("icon"): {
@@ -112,3 +115,11 @@ if (App.routes("search")) {
     document.querySelector(".stat")?.classList.add("active");
   }, 1000);
 }
+
+const navOptionsA = document.querySelector("#nav__options a");
+console.log(navOptionsA ? "exist" : "no exist");
+navOptionsA?.addEventListener("click", () => {
+  console.log("addEvent");
+
+  toggleActive();
+});

@@ -1,6 +1,7 @@
 [alias]
-    acp = !sh -c 'git add . && git commit -m "$1" && git push origin $(git symbolic-ref --short HEAD)'
-    ac = !sh -c 'git add . && git commit -m "$1"'
-    cacp = !sh -c 'git checkout -b "$1" && git add . && git commit -m "$1" && git push origin $(git symbolic-ref --short HEAD)'
-    c = !sh -c 'git checkout -b "$1"'
+    acp = "!f() { git add . && git commit -m \"$1\" && git push origin $(git symbolic-ref --short HEAD); }; f"
+    ac = "!f() { git add . && git commit -m \"$1\"; }; f"
+    cacp = "!f() { git checkout -b \"$1\" && git add . && git commit -m \"$1\" && git push origin $(git symbolic-ref --short HEAD); }; f"
+    c = "!f() { git checkout -b \"$1\"; }; f"
+
 

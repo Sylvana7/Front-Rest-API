@@ -130,11 +130,6 @@ $colors_vibrant:
 $base-size: 3; // Taille de police de base pour h1
 $base-spacing: 6; // Espacement de base
 
-// @function calculate-font-size($level) {
-//   $calc: math.pow(1.5, $level - 1);
-//   @return $base-size * $calc; // Utilisation de la fonction pow()
-// }
-
 @function calculate-font-size($level) {
   @debug $level;
   $levelNumber: calc($level * 1);
@@ -146,6 +141,24 @@ $base-spacing: 6; // Espacement de base
 @function calculate-letter-spacing($level) {
   $levelNumber: calc($level * 1);
   $diff: calc($base-spacing - $levelNumber);
+  $max: max($diff, 1);
+  @return calc($max * 1px);
+}
+
+$base-size-m: 2; // Taille de police de base pour h1
+$base-spacing-m: 4; // Espacement de base
+
+@function calculate-font-size-mobil($level) {
+  @debug $level;
+  $levelNumber: calc($level * 1);
+  $calc: pow(1.5, $levelNumber - 1);
+  $multipl: calc($base-size-m * $calc);
+  @return calc($multipl * 1em);
+}
+
+@function calculate-letter-spacing-mobil($level) {
+  $levelNumber: calc($level * 1);
+  $diff: calc($base-spacing-m - $levelNumber);
   $max: max($diff, 1);
   @return calc($max * 1px);
 }
