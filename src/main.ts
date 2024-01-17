@@ -6,7 +6,7 @@ import { App } from "./ts/routes/routes";
 import { PokemonPage } from "./ts/controllers/pokemonPage";
 import { GenerateHtml } from "./ts/controllers/generateHtml";
 import { toggleActive } from "./ts/services/functions";
-import "./scss/style.scss";
+import "./css/style.min.css";
 
 export const hostname: string = window.location.origin;
 export const secureCookie: boolean = false;
